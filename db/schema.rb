@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_11_193648) do
+ActiveRecord::Schema.define(version: 2019_10_11_195319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,16 @@ ActiveRecord::Schema.define(version: 2019_10_11_193648) do
     t.index ["student_id"], name: "index_students_courses_on_student_id"
   end
 
+  create_table "test_assignment_question_rubric_elements", force: :cascade do |t|
+    t.bigint "test_assignment_question_id"
+    t.bigint "rubric_element_id"
+    t.boolean "present"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rubric_element_id"], name: "idx_test_assignment_q_rubric_elements_on_rubric_element_id"
+    t.index ["test_assignment_question_id"], name: "idx_test_assignment_q_rubric_elements_on_test_assignment_q_id"
+  end
+
   create_table "test_assignment_questions", force: :cascade do |t|
     t.bigint "test_assignment_id"
     t.bigint "question_id"
@@ -166,6 +176,8 @@ ActiveRecord::Schema.define(version: 2019_10_11_193648) do
   add_foreign_key "skills", "skills", column: "parent_id"
   add_foreign_key "students_courses", "courses"
   add_foreign_key "students_courses", "users", column: "student_id"
+  add_foreign_key "test_assignment_question_rubric_elements", "rubric_elements"
+  add_foreign_key "test_assignment_question_rubric_elements", "test_assignment_questions"
   add_foreign_key "test_assignment_questions", "answer_options", column: "answer_id"
   add_foreign_key "test_assignment_questions", "questions"
   add_foreign_key "test_assignment_questions", "test_assignments"

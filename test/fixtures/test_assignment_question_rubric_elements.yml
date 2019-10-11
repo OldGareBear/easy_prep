@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  test_assignment_question: one
+  rubric_element: one
+  present: false
+
+two:
+  test_assignment_question: two
+  rubric_element: two
+  present: false
