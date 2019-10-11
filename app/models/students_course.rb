@@ -1,4 +1,4 @@
 class StudentsCourse < ApplicationRecord
   belongs_to :course
-  belongs_to :user
+  belongs_to :student, class_name: 'User', foreign_key: :student_id
 end
