@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_11_123630) do
+ActiveRecord::Schema.define(version: 2019_10_11_125541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,19 @@ ActiveRecord::Schema.define(version: 2019_10_11_123630) do
     t.bigint "student_id"
     t.index ["course_id"], name: "index_students_courses_on_course_id"
     t.index ["student_id"], name: "index_students_courses_on_student_id"
+  end
+
+  create_table "test_assignments", force: :cascade do |t|
+    t.bigint "test_id"
+    t.bigint "course_id"
+    t.datetime "due_at"
+    t.integer "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "student_id"
+    t.index ["course_id"], name: "index_test_assignments_on_course_id"
+    t.index ["student_id"], name: "index_test_assignments_on_student_id"
+    t.index ["test_id"], name: "index_test_assignments_on_test_id"
   end
 
   create_table "tests", force: :cascade do |t|
@@ -67,5 +80,8 @@ ActiveRecord::Schema.define(version: 2019_10_11_123630) do
   add_foreign_key "courses", "users", column: "teacher_id"
   add_foreign_key "students_courses", "courses"
   add_foreign_key "students_courses", "users", column: "student_id"
+  add_foreign_key "test_assignments", "courses"
+  add_foreign_key "test_assignments", "tests"
+  add_foreign_key "test_assignments", "users", column: "student_id"
   add_foreign_key "tests", "users", column: "creator_id"
 end

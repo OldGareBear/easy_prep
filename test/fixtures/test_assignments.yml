@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  test: one
+  course: one
+  due_at: 2019-10-11 08:55:41
+
+two:
+  test: two
+  course: two
+  due_at: 2019-10-11 08:55:41

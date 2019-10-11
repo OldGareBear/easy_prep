@@ -10,4 +10,10 @@ class User < ApplicationRecord
 
   has_many :students_courses, foreign_key: :student_id
   has_many :enrolled_courses, class_name: 'Course', through: :students_courses
+
+  has_many :assigned_test_assignments, class_name: 'TestAssignment', foreign_key: :student_id
+
+  def confirmation_required?
+    user_type.teacher?
+  end
 end
