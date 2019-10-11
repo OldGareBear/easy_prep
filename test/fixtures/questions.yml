@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  question_type: one
+  skill: one
+  text: MyText
+
+two:
+  question_type: two
+  skill: two
+  text: MyText
