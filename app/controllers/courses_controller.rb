@@ -12,6 +12,7 @@ class CoursesController < ApplicationController
   end
 
   def create
+    byebug
     @course = Course.new(new_course_params.merge(teacher: current_user))
 
     respond_to do |format|
