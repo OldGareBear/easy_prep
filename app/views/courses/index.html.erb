@@ -1,7 +1,13 @@
-<% @courses.each do |course| %>
-    <div><%= link_to(course.name, controller: 'courses', action: 'show', id: course.id) %></div>
-<% end %>
+<div class="column">
+  <div class="ui container">
+    <% @courses.each do |course| %>
+        <div class="ui card">
+          <%= link_to(course.name, controller: 'courses', action: 'show', id: course.id) %>
+        </div>
+    <% end %>
 
-<div>
-  <%= link_to('New', controller: 'courses', action: 'new') %>
+    <div class="ui button">
+      <%= link_to('New', controller: 'courses', action: 'new') %>
+    </div>
+  </div>
 </div>
