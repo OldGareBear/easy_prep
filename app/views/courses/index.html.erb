@@ -1,8 +1,15 @@
 <div class="column">
   <div class="ui container">
+    <div></div>
+    <h1 class="ui header">My Classes</h1>
     <% @courses.each do |course| %>
         <div class="ui card">
-          <%= link_to(course.name, controller: 'courses', action: 'show', id: course.id) %>
+          <div class="image">
+            <img src="/images/book.png">
+          </div>
+          <div class="content">
+            <%= link_to(course.name, controller: 'courses', action: 'show', id: course.id) %>
+          </div>
         </div>
     <% end %>
 

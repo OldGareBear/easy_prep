@@ -1,4 +1,6 @@
 class CoursesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @courses = current_user.taught_courses
   end

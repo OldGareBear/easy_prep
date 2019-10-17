@@ -7,8 +7,38 @@
   </head>
 
   <body>
+    <div class="ui fixed inverted menu" style="">
+      <div class="ui container">
+        <a href="/" class="header item">
+          EasyPrep
+        </a>
+        <% if current_user %>
+        <a href="/" class="item">Home</a>
+        <div class="ui simple dropdown item">
+          Account <i class="dropdown icon"></i>
+          <div class="menu">
+            <a class="item" href="#">Link Item</a>
+            <a class="item" href="#">Link Item</a>
+            <div class="divider"></div>
+            <div class="header">Header Item</div>
+            <div class="item">
+              <i class="dropdown icon"></i>
+              Sub Menu
+              <div class="menu">
+                <a class="item" href="#">Link Item</a>
+                <a class="item" href="#">Link Item</a>
+              </div>
+            </div>
+            <a class="item" href="#">Link Item</a>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
     <div class="ui middle aligned grid">
       <%= yield %>
     </div>
   </body>
+  <!--TODO: comment back in when I have a footer -->
+  <!--<div>Icons made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>-->
 </html>
