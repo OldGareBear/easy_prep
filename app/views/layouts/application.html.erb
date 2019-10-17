@@ -22,10 +22,14 @@
           </div>
         </div>
         <% end %>
-
-        <% if @course %>
+        
+        <% if user_signed_in? %>
             <div class="ui simple dropdown item">
-              <%= @course.name %> <i class="dropdown icon"></i>
+              <% if @course %>
+                  <%= @course.name %> <i class="dropdown icon"></i>
+              <% else %>
+                  My Classes <i class="dropdown icon"></i>
+              <% end %>
               <div class="menu">
                 <% current_user.taught_courses.each do |course| %>
                   <%= link_to(course.name, course_path(course), class: 'item') %>
