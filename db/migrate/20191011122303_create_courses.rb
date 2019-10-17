@@ -2,8 +2,7 @@ class CreateCourses < ActiveRecord::Migration[5.2]
   def change
     create_table :courses do |t|
       t.string :name
-      t.integer :grade
-      t.string :year
+      t.string :grade
 
       t.timestamps
     end

@@ -1,0 +1,49 @@
+<%= form_with(model: course, local: true, html: {  class: 'ui large form' }) do |form| %>
+    <% if course.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(course.errors.count, 'error') %> prohibited this course from being saved:</h2>
+
+          <ul>
+            <% course.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= form.label :grade %>
+      <select name="course[grade]" id="course_grade" class="ui dropdown">
+        <option value="">Please select</option>
+        <option value="1">1st</option>
+        <option value="2">2nd</option>
+        <option value="3">3rd</option>
+        <option value="4">4th</option>
+        <option value="5">5th</option>
+      </select>
+    </div>
+
+    <h2 class="ui header">Students</h2>
+    <div id="new-students-container" class="ui container">
+      <div id="new-student-container" class="ui horizontal segments" data-position="0">
+        <div class="field ui segment">
+          <%= form.label :first_name %>
+          <input id="person_name" name="students[0][first_name]" type="text"/>
+        </div>
+        <div class="field ui segment">
+          <%= form.label :last_name %>
+          <input id="person_name" name="students[0][last_name]" type="text"/>
+        </div>
+      </div>
+    </div>
+
+    <div id="add-student" class="ui button">Add another student</div>
+
+
+    <%= form.submit 'Save Class', class: 'ui button' %>
+<% end %>

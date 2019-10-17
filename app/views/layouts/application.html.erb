@@ -2,14 +2,43 @@
 <html>
   <head>
     <title>EasyPrep</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag 'application' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="ui fixed inverted menu" style="">
+      <div class="ui container">
+        <a href="/" class="header item">
+          EasyPrep
+        </a>
+        <% if user_signed_in? %>
+        <a href="/" class="item">Home</a>
+        <div class="ui simple dropdown item">
+          Account <i class="dropdown icon"></i>
+          <div class="menu">
+            <%= link_to('View profile', user_path(current_user), class: 'item') %>
+            <%= link_to('Logout', destroy_user_session_path, method: :delete, class: 'item') %>
+          </div>
+        </div>
+        <% end %>
+
+        <% if @course %>
+            <div class="ui simple dropdown item">
+              <%= @course.name %> <i class="dropdown icon"></i>
+              <div class="menu">
+                <% current_user.taught_courses.each do |course| %>
+                  <%= link_to(course.name, course_path(course), class: 'item') %>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="ui middle aligned grid">
+      <%= yield %>
+    </div>
   </body>
+  <!--TODO: comment back in when I have a footer -->
+  <!--<div>Icons made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>-->
 </html>

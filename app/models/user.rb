@@ -13,6 +13,14 @@ class User < ApplicationRecord
 
   has_many :assigned_test_assignments, class_name: 'TestAssignment', foreign_key: :student_id
 
+  def self.create_student!(attrs)
+    create!(attrs.merge(user_type: UserType.student))
+  end
+
+  def self.create_teacher!(attrs)
+    create!(attrs.merge(user_type: UserType.teacher))
+  end
+
   def confirmation_required?
     user_type.teacher?
   end
