@@ -12,24 +12,13 @@
         <a href="/" class="header item">
           EasyPrep
         </a>
-        <% if current_user %>
+        <% if user_signed_in? %>
         <a href="/" class="item">Home</a>
         <div class="ui simple dropdown item">
           Account <i class="dropdown icon"></i>
           <div class="menu">
-            <a class="item" href="#">Link Item</a>
-            <a class="item" href="#">Link Item</a>
-            <div class="divider"></div>
-            <div class="header">Header Item</div>
-            <div class="item">
-              <i class="dropdown icon"></i>
-              Sub Menu
-              <div class="menu">
-                <a class="item" href="#">Link Item</a>
-                <a class="item" href="#">Link Item</a>
-              </div>
-            </div>
-            <a class="item" href="#">Link Item</a>
+            <%= link_to('View profile', user_path(current_user), class: 'item') %>
+            <%= link_to('Logout', destroy_user_session_path, method: :delete, class: 'item') %>
           </div>
         </div>
         <% end %>
