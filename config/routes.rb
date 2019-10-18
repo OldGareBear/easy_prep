@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :courses do
     resources :students
+    resources :test_assignments
   end
 
   resources :users, only: [:edit, :show, :update]

@@ -1,0 +1,5 @@
+<%= form_with(model: test_assignment, url: [@course, @test_assignment], local: true, html: {  class: 'ui large form' }) do |form| %>
+
+  <%= form.collection_select(:test_id, Test.all, :id, :name, { prompt: true }, { class: 'ui dropdown' }) %>
+
+<% end %>
