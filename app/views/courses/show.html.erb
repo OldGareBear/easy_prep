@@ -1,0 +1,27 @@
+<div class="ui three column center aligned grid">
+  <div></div>
+  <h1 class="ui header">Dashboard</h1>
+  <div class="column">
+    <div class="ui container">
+      <div></div>
+      <h3 class="ui header">Students</h3>
+      <% @course.students.each do |student| %>
+            <div class="ui container">
+              <div class="content">
+                <%= link_to("#{student.first_name} #{student.last_name}", course_student_path(@course, student)) %>
+              </div>
+            </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui container">
+      <div></div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui container">
+      <div></div>
+    </div>
+  </div>
+</div>
