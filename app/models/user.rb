@@ -24,4 +24,8 @@ class User < ApplicationRecord
   def confirmation_required?
     user_type.teacher?
   end
+
+  def name
+    "#{first_name} #{last_name}"
+  end
 end

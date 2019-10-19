@@ -1,5 +1,44 @@
 <%= form_with(model: test_assignment, url: [@course, @test_assignment], local: true, html: {  class: 'ui large form' }) do |form| %>
 
-  <%= form.collection_select(:test_id, Test.all, :id, :name, { prompt: true }, { class: 'ui dropdown' }) %>
+    <div class="field">
+      <%= form.label :assessment %>
+      <%= form.collection_select(:test_id, Test.all, :id, :name, { prompt: true }, { class: 'ui dropdown' }) %>
+    </div>
+
+    <div class="field">
+    <%= form.label :due_at %>
+      <div class="ui calendar" id="example1">
+        <div class="ui input left icon">
+          <i class="calendar icon"></i>
+          <input type="text" placeholder="Date/Time">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= form.label :students %>
+      <div class="ui continer">
+        <div class="ui checkbox">
+          <%= form.check_box(:students, { multiple: true }, 'all') %>
+          <label>All Students</label>
+        </div>
+      </div>
+      <% @course.students.each do |student| %>
+          <div class="ui continer">
+            <div class="ui checkbox">
+              <%= form.check_box(:students, { multiple: true }, student.id) %>
+              <label><%= student.name %></label>
+            </div>
+          </div>
+      <% end %>
+    </div>
+
+    <script>
+//        document.addEventListener('DOMContentLoaded', function(){
+//            (function () {
+//                $("#example1").datetimepicker();
+//            }());
+//        }, false);
+    </script>
 
 <% end %>
