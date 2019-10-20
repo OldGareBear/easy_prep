@@ -1,5 +1,17 @@
 <%= form_with(model: test_assignment, url: [@course, @test_assignment], local: true, html: {  class: 'ui large form' }) do |form| %>
 
+    <% if test_assignment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(test.errors.count, 'error') %> prohibited this test from being assigned:</h2>
+
+          <ul>
+            <% test_assignment.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
     <div class="field">
       <%= form.label :assessment %>
       <%= form.collection_select(:test_id, Test.all, :id, :name, { prompt: true }, { class: 'ui dropdown' }) %>
@@ -27,7 +39,7 @@
     </div>
 
     <div class="actions">
-      <%= form.submit 'Assign test', class: 'ui button' %>
+      <%= form.submit 'Assign test', class: 'ui button primary' %>
     </div>
 
 <% end %>
