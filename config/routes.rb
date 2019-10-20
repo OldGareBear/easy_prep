@@ -12,5 +12,7 @@ Rails.application.routes.draw do
     resources :test_assignments
   end
 
+  resources :tests
+
   resources :users, only: [:edit, :show, :update]
 end

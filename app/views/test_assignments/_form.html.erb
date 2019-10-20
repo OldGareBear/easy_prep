@@ -3,15 +3,8 @@
     <div class="field">
       <%= form.label :assessment %>
       <%= form.collection_select(:test_id, Test.all, :id, :name, { prompt: true }, { class: 'ui dropdown' }) %>
-    </div>
-
-    <div class="field">
-    <%= form.label :due_at %>
-      <div class="ui calendar" id="example1">
-        <div class="ui input left icon">
-          <i class="calendar icon"></i>
-          <input type="text" placeholder="Date/Time">
-        </div>
+      <div class="ui button">
+        <%= link_to('Create a new test', new_test_path) %>
       </div>
     </div>
 
@@ -31,6 +24,10 @@
             </div>
           </div>
       <% end %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit 'Assign test', class: 'ui button' %>
     </div>
 
 <% end %>
