@@ -20,7 +20,7 @@
 
       <!-- First tab (multiple choice) -->
       <div class="ui bottom attached tab segment active" data-tab="first">
-        <div class="ui container">
+        <div class="question ui container">
 
           <form class="ui form small">
             <div class="field">
@@ -30,9 +30,24 @@
 
             <div class="field">
               <h4 class="ui header small">Answer options</h4>
-              <div class="inline fields">
-                <label>A.</label>
-                <input class="easy_prep_answer_option" type="text" name="A">
+
+              <!--Answer option-->
+              <div class="easy_prep_answer_option inline fields">
+                  <label>A.</label>
+                  <input class="easy_prep_answer_option_text" type="text" name="A">
+                  <span style="width: 10px;"></span>
+                  <div class="inline field">
+                    <div class="ui toggle checkbox">
+                      <input type="checkbox" tabindex="0" class="hidden">
+                      <label>Correct?</label>
+                    </div>
+                  </div>
+              </div>
+
+              <!--Answer option-->
+              <div class="easy_prep_answer_option inline fields">
+                <label>B.</label>
+                <input class="easy_prep_answer_option_text" type="text" name="B">
 
                 <span style="width: 10px;"></span>
 
@@ -44,7 +59,35 @@
                 </div>
               </div>
 
-              <div id="add-answer-option" class="ui button">Add another answer option</div>
+              <!--Answer option-->
+              <div class="easy_prep_answer_option inline fields">
+                <label>C.</label>
+                <input class="easy_prep_answer_option_text" type="text" name="C">
+
+                <span style="width: 10px;"></span>
+
+                <div class="inline field">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" tabindex="0" class="hidden">
+                    <label>Correct?</label>
+                  </div>
+                </div>
+              </div>
+
+              <!--Answer option-->
+              <div class="easy_prep_answer_option inline fields">
+                <label>D.</label>
+                <input class="easy_prep_answer_option_text" type="text" name="D">
+
+                <span style="width: 10px;"></span>
+
+                <div class="inline field">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" tabindex="0" class="hidden">
+                    <label>Correct?</label>
+                  </div>
+                </div>
+              </div>
             </div>
           </form>
 
@@ -53,7 +96,7 @@
 
       <!-- Second tab (short response) -->
       <div class="ui bottom attached tab segment" data-tab="second">
-        <div class="ui container">
+        <div class="question ui container">
 
           <form class="ui form small">
             <div class="field">
@@ -67,7 +110,7 @@
 
       <!-- Third tab (extended response) -->
       <div class="ui bottom attached tab segment" data-tab="third">
-        <div class="ui container">
+        <div class="question ui container">
 
           <form class="ui form small">
             <div class="field">
@@ -79,7 +122,7 @@
         </div>
       </div>
       <div class="actions">
-        <div class="ui button primary">Save Question</div>
+        <div id="save-question" class="ui button primary">Save Question</div>
       </div>
     </div>
 
