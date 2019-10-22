@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', function(){
             window._easy_prep_number_of_questions = window._easy_prep_number_of_questions + 1;
 
             // set question input names based on number of questions
-            question
+            var newDescription = 'question[' + window._easy_prep_number_of_questions + '][description]';
+            $(question).find('#question_description').prop('name', newDescription);
 
             // clear inputs
             var modalTabs = $('.ui.bottom.attached.tab');
