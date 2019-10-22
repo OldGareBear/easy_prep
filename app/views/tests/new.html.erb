@@ -22,10 +22,10 @@
       <div class="ui bottom attached tab segment active" data-tab="first">
         <div class="question ui container">
 
-          <form class="ui form small">
+          <div class="ui form small">
             <div class="field">
               <h4 class="ui header small">Question text</h4>
-              <textarea rows="2" name="question[description]" id="question_description"></textarea>
+              <textarea rows="2" name="question[0][description]" id="question_description"></textarea>
             </div>
 
             <div class="field">
@@ -34,11 +34,11 @@
               <!--Answer option-->
               <div class="easy_prep_answer_option inline fields">
                   <label>A.</label>
-                  <input class="easy_prep_answer_option_text" type="text" name="A">
+                  <input class="easy_prep_answer_option_text" type="text" name="question[0][answer_option][0]">
                   <span style="width: 10px;"></span>
                   <div class="inline field">
                     <div class="ui toggle checkbox">
-                      <input type="checkbox" tabindex="0" class="hidden">
+                      <input type="checkbox" tabindex="0" class="hidden" name="question[0][correct_answer_options][]" value="0">
                       <label>Correct?</label>
                     </div>
                   </div>
@@ -47,13 +47,13 @@
               <!--Answer option-->
               <div class="easy_prep_answer_option inline fields">
                 <label>B.</label>
-                <input class="easy_prep_answer_option_text" type="text" name="B">
+                <input class="easy_prep_answer_option_text" type="text" name="question[0][answer_option][1]">
 
                 <span style="width: 10px;"></span>
 
                 <div class="inline field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" tabindex="0" class="hidden">
+                    <input type="checkbox" tabindex="0" class="hidden" name="question[0][correct_answer_options][]" value="1">
                     <label>Correct?</label>
                   </div>
                 </div>
@@ -62,13 +62,13 @@
               <!--Answer option-->
               <div class="easy_prep_answer_option inline fields">
                 <label>C.</label>
-                <input class="easy_prep_answer_option_text" type="text" name="C">
+                <input class="easy_prep_answer_option_text" type="text" name="question[0][answer_option][2]">
 
                 <span style="width: 10px;"></span>
 
                 <div class="inline field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" tabindex="0" class="hidden">
+                    <input type="checkbox" tabindex="0" class="hidden" name="question[0][correct_answer_options][]" value="2">
                     <label>Correct?</label>
                   </div>
                 </div>
@@ -77,19 +77,19 @@
               <!--Answer option-->
               <div class="easy_prep_answer_option inline fields">
                 <label>D.</label>
-                <input class="easy_prep_answer_option_text" type="text" name="D">
+                <input class="easy_prep_answer_option_text" type="text" name="question[0][answer_option][3]">
 
                 <span style="width: 10px;"></span>
 
                 <div class="inline field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" tabindex="0" class="hidden">
+                    <input type="checkbox" tabindex="0" class="hidden" name="question[0][correct_answer_options][]" value="3">
                     <label>Correct?</label>
                   </div>
                 </div>
               </div>
             </div>
-          </form>
+          </div>
 
         </div>
       </div>
@@ -101,7 +101,7 @@
           <form class="ui form small">
             <div class="field">
               <h4 class="ui header small">Question text</h4>
-              <textarea rows="2" name="question[description]" id="question_description"></textarea>
+              <textarea rows="2" name="question[0][description]" id="question_description"></textarea>
             </div>
           </form>
 
@@ -115,7 +115,7 @@
           <form class="ui form small">
             <div class="field">
               <h4 class="ui header small">Question text</h4>
-              <textarea rows="2" name="question[description]" id="question_description"></textarea>
+              <textarea rows="2" name="question[0][description]" id="question_description"></textarea>
             </div>
           </form>
 

@@ -3,6 +3,7 @@ class TestsController < ApplicationController
     @test = Test.new
   end
 
-  def update
+  def create
+    byebug
   end
 end
