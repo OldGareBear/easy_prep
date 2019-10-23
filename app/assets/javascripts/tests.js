@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
             // set question input names based on number of questions
             var newDescription = 'question[' + window._easy_prep_question_number + '][description]';
-            var modalContainer = $('ui.bottom.attached.tab.segment');
+            var modalContainer = $('.ui.bottom.attached.tab.segment');
             modalContainer.find('#question_description').prop('name', newDescription);
             var previousQuestion = window._easy_prep_question_number - 1;
             var a = modalContainer.find("input[name='question[" + previousQuestion + "][answer_option][0]']");
