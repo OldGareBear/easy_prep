@@ -26,6 +26,7 @@
             <div class="field">
               <h4 class="ui header small">Question text</h4>
               <textarea rows="2" name="question[0][description]" id="question_description"></textarea>
+              <input class="question_type" name="question[0][type]" value="multiple choice" type="hidden">
             </div>
 
             <div class="field">
@@ -98,12 +99,13 @@
       <div class="ui bottom attached tab segment" data-tab="second">
         <div class="question ui container">
 
-          <form class="ui form small">
+          <div class="ui form small">
             <div class="field">
               <h4 class="ui header small">Question text</h4>
               <textarea rows="2" name="question[0][description]" id="question_description"></textarea>
+              <input class="question_type" name="question[0][type]" value="short response" type="hidden">
             </div>
-          </form>
+          </div>
 
         </div>
       </div>
@@ -112,12 +114,13 @@
       <div class="ui bottom attached tab segment" data-tab="third">
         <div class="question ui container">
 
-          <form class="ui form small">
+          <div class="ui form small">
             <div class="field">
               <h4 class="ui header small">Question text</h4>
               <textarea rows="2" name="question[0][description]" id="question_description"></textarea>
+              <input class="question_type" name="question[0][type]" value="extended response" type="hidden">
             </div>
-          </form>
+          </div>
 
         </div>
       </div>

@@ -4,6 +4,22 @@ document.addEventListener('DOMContentLoaded', function(){
 
         $('#add-question').click(function() {
             $('.ui.modal').modal('show');
+
+            // TODO: after we press "save question," these values are getting wiped; find out why and removed
+            // this hack
+            var modalContainer = $('.ui.bottom.attached.tab.segment');
+
+            var questionTypes = modalContainer.find('.question_type');
+            $(questionTypes[0]).prop('value', 'multiple choice');
+            $(questionTypes[1]).prop('value', 'short response');
+            $(questionTypes[2]).prop('value', 'extended response');
+
+            var checkboxName = 'question[' + window._easy_prep_question_number + '][correct_answer_options][]';
+            var checkboxes = modalContainer.find("input[name='" + checkboxName  + "']");
+            $(checkboxes[0]).prop('value', '0');
+            $(checkboxes[1]).prop('value', '1');
+            $(checkboxes[2]).prop('value', '2');
+            $(checkboxes[3]).prop('value', '3');
         });
 
         $('#save-question').click(function () {
@@ -19,9 +35,16 @@ document.addEventListener('DOMContentLoaded', function(){
             window._easy_prep_question_number = window._easy_prep_question_number + 1;
 
             // set question input names based on number of questions
+
+                // description and type
             var newDescription = 'question[' + window._easy_prep_question_number + '][description]';
+            var newType = 'question[' + window._easy_prep_question_number + '][type]';
             var modalContainer = $('.ui.bottom.attached.tab.segment');
             modalContainer.find('#question_description').prop('name', newDescription);
+            var questionTypes = modalContainer.find('.question_type');
+            questionTypes.prop('name', newType);
+
+                // answer options
             var previousQuestion = window._easy_prep_question_number - 1;
             var a = modalContainer.find("input[name='question[" + previousQuestion + "][answer_option][0]']");
             var b = modalContainer.find("input[name='question[" + previousQuestion + "][answer_option][1]']");
@@ -32,12 +55,18 @@ document.addEventListener('DOMContentLoaded', function(){
             c.prop('name', 'question[' + window._easy_prep_question_number + '][answer_option][2]');
             d.prop('name', 'question[' + window._easy_prep_question_number + '][answer_option][3]');
 
+                // checkboxes
+            var oldCheckboxName = 'question[' + previousQuestion + '][correct_answer_options][]';
+            var checkboxes = modalContainer.find("input[name='" + oldCheckboxName  + "']");
+            var newCheckboxName = 'question[' + window._easy_prep_question_number + '][correct_answer_options][]';
+            checkboxes.prop('name', newCheckboxName);
+
             // clear inputs
             var modalTabs = $('.ui.bottom.attached.tab');
             modalTabs.find('input').val('');
             modalTabs.find('textarea').val('');
             modalTabs.find('.ui.toggle.checkbox.checked').removeClass('checked');
-            $('.ui.toggle.checkbox').find('input').prop('checked', false)
+            modalTabs.find('.ui.toggle.checkbox').find('input').prop('checked', false);
         });
     }());
 }, false);
