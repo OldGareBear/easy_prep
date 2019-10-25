@@ -45,10 +45,10 @@ class CoursesController < ApplicationController
   end
 
   def generate_fake_email(first_name, last_name)
-    email_candidate_search = first_name.chars.first + last_name + '%@easy_prep.student'
+    email_candidate_search = first_name.chars.first + last_name + '@' + fake_email_domain
     matches = User.where("email like ?", email_candidate_search).pluck(:email)
     highest_increment = matches.map { |match| match.match(/\d/).to_a.first.to_i }.max
-    first_name.chars.first + last_name + increment(highest_increment, matches.count)  + '@easy_prep.student'
+    first_name.chars.first + last_name + increment(highest_increment, matches.count) + '@' + fake_email_domain
   end
 
   def generate_fake_password(first_name, last_name)
@@ -72,5 +72,9 @@ class CoursesController < ApplicationController
       email: generate_fake_email(first_name, last_name),
       password: generate_fake_password(first_name, last_name)
     )
+  end
+
+  def fake_email_domain
+    'easyprep.student'
   end
 end
