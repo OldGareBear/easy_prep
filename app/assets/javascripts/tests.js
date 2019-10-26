@@ -68,5 +68,24 @@ document.addEventListener('DOMContentLoaded', function(){
             modalTabs.find('.ui.toggle.checkbox.checked').removeClass('checked');
             modalTabs.find('.ui.toggle.checkbox').find('input').prop('checked', false);
         });
+
+        $('.ui.search')
+            .search({
+                apiSettings: {
+                    url: '/api/v1/skills?search_query={query}'
+                },
+                fields: {
+                    title: 'name',
+                    description: 'oid'
+                },
+                minCharacters : 2,
+                onSelect: function(result, response) {
+                    var searchIcon = $('.search.icon');
+                    searchIcon.removeClass('search');
+                    searchIcon.addClass('check');
+                    searchIcon.addClass('green');
+                }
+            })
+        ;
     }());
 }, false);

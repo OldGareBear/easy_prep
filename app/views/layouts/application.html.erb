@@ -32,9 +32,13 @@
               <% if @course&.id %>
                   <%= @course.name %> <i class="dropdown icon"></i>
               <% else %>
-                  My Classes <i class="dropdown icon"></i>
+                  My Classes
+                  <% if current_user.taught_courses.count > 0 %>
+                      <i class="dropdown icon"></i>
+                  <% end %>
               <% end %>
               <div class="menu">
+                <%= link_to('My classes', courses_path, class: 'item') %>
                 <% current_user.taught_courses.each do |course| %>
                   <%= link_to(course.name, course_path(course), class: 'item') %>
                 <% end %>
