@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_27_171729) do
+ActiveRecord::Schema.define(version: 2019_10_27_185613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,12 +60,23 @@ ActiveRecord::Schema.define(version: 2019_10_27_171729) do
     t.index ["skill_id"], name: "index_questions_on_skill_id"
   end
 
+  create_table "rubric_element_criterions", force: :cascade do |t|
+    t.text "name"
+    t.bigint "skill_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "description"
+    t.index ["skill_id"], name: "index_rubric_element_criterions_on_skill_id"
+  end
+
   create_table "rubric_elements", force: :cascade do |t|
     t.text "text"
     t.integer "required_for_point_level"
     t.bigint "rubric_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "rubric_element_criterion_id"
+    t.index ["rubric_element_criterion_id"], name: "index_rubric_elements_on_rubric_element_criterion_id"
     t.index ["rubric_id"], name: "index_rubric_elements_on_rubric_id"
   end
 
@@ -186,6 +197,8 @@ ActiveRecord::Schema.define(version: 2019_10_27_171729) do
   add_foreign_key "question_types", "rubrics"
   add_foreign_key "questions", "question_types"
   add_foreign_key "questions", "skills"
+  add_foreign_key "rubric_element_criterions", "skills"
+  add_foreign_key "rubric_elements", "rubric_element_criterions"
   add_foreign_key "rubric_elements", "rubrics"
   add_foreign_key "skills", "skills", column: "parent_id"
   add_foreign_key "students_courses", "courses"
