@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function(){
             // copy question to test
             var question = $('.ui.bottom.attached.tab.segment.active').find('.question.ui.container')[0];
             var clone = $.clone(question);
+            var questionForm = $(clone).find(".ui.form.small");
+            questionForm.prop('style', "padding: 10px");
             $(clone).addClass('segment');
             $(clone).addClass('item');
             $('#questions-container').append(clone);
@@ -67,6 +69,10 @@ document.addEventListener('DOMContentLoaded', function(){
             modalTabs.find('textarea').val('');
             modalTabs.find('.ui.toggle.checkbox.checked').removeClass('checked');
             modalTabs.find('.ui.toggle.checkbox').find('input').prop('checked', false);
+            var searchIcon = modalTabs.find('.green.check.icon');
+            searchIcon.addClass('search');
+            searchIcon.removeClass('check');
+            searchIcon.removeClass('green');
         });
 
         $('.ui.search')

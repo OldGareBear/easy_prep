@@ -62,7 +62,7 @@ class CoursesController < ApplicationController
   end
 
   def new_course_params
-    params.require(:course).permit(:name, :grade)
+    params.require(:course).permit(:name, :grade_id)
   end
 
   def create_student!(first_name, last_name)

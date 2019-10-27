@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_18_144938) do
+ActiveRecord::Schema.define(version: 2019_10_27_171729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,11 +27,18 @@ ActiveRecord::Schema.define(version: 2019_10_18_144938) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
-    t.integer "grade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "teacher_id"
+    t.bigint "grade_id"
+    t.index ["grade_id"], name: "index_courses_on_grade_id"
     t.index ["teacher_id"], name: "index_courses_on_teacher_id"
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "question_types", force: :cascade do |t|
@@ -146,7 +153,9 @@ ActiveRecord::Schema.define(version: 2019_10_18_144938) do
     t.string "document_content_type"
     t.integer "document_file_size"
     t.datetime "document_updated_at"
+    t.bigint "grade_id"
     t.index ["creator_id"], name: "index_tests_on_creator_id"
+    t.index ["grade_id"], name: "index_tests_on_grade_id"
   end
 
   create_table "user_types", force: :cascade do |t|
@@ -172,6 +181,7 @@ ActiveRecord::Schema.define(version: 2019_10_18_144938) do
   end
 
   add_foreign_key "answer_options", "questions"
+  add_foreign_key "courses", "grades"
   add_foreign_key "courses", "users", column: "teacher_id"
   add_foreign_key "question_types", "rubrics"
   add_foreign_key "questions", "question_types"
@@ -190,5 +200,6 @@ ActiveRecord::Schema.define(version: 2019_10_18_144938) do
   add_foreign_key "test_assignments", "users", column: "student_id"
   add_foreign_key "test_questions", "questions"
   add_foreign_key "test_questions", "tests"
+  add_foreign_key "tests", "grades"
   add_foreign_key "tests", "users", column: "creator_id"
 end
