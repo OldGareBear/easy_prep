@@ -49,10 +49,25 @@ task create_question_types: :environment do
   # Extended response rubric malarkey
 
     # Create criteria, associating with skills
+      # 3rd grade
+  third_grade_extended_response_rubric =  Rubric.find_or_create_by!(name: 'third grade extended response rubric')
+
   content_and_analysis = RubricElementCriterion.find_or_create_by!(
     name: 'CONTENT AND ANALYSIS',
     description: 'the extent to which the essay conveys ideas and informa on clearly and accurately in order to support analysis of topics or text'
   )
+
+  four_point_c_and_a_elements = [
+    'clearly introduce a topic in a manner that follows logically from the task and purpose',
+    'demonstrate comprehension and analysis of the text',
+  ]
+  four_point_c_and_a_elements.each do |element_text|
+    RubricElement.find_or_create_by!(
+      required_for_point_level: 4,
+      rubric: third_grade_extended_response_rubric,
+      text: element_text
+    )
+  end
 
     # Create rubric elements, one for each point level for each criterion for each grade set
 end
