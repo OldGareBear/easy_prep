@@ -6,7 +6,7 @@ task create_question_types: :environment do
   seventh = Grade.find_or_create_by(name: '7th')
   eighth = Grade.find_or_create_by(name: '8th')
 
-  multiple_choice = QuestionType.find_or_create_by!(name: 'multiple choice')
+  QuestionType.find_or_create_by!(name: 'multiple choice')
   short_response = QuestionType.find_or_create_by!(name: 'short response')
 
   # Short response rubric malarkey
@@ -47,28 +47,114 @@ task create_question_types: :environment do
   short_response.rubric = short_response_rubric
 
   # Extended response rubric malarkey
-
-    # Create criteria, associating with skills
-      # 3rd grade
+    # 3rd grade
+  extended_response = QuestionType.find_or_create_by!(name: 'extended response')
+      # Create criteria, associating with skills
+        # CONTENT AND ANALYSIS
   third_grade_extended_response_rubric =  Rubric.find_or_create_by!(name: 'third grade extended response rubric')
 
-  content_and_analysis = RubricElementCriterion.find_or_create_by!(
-    name: 'CONTENT AND ANALYSIS',
-    description: 'the extent to which the essay conveys ideas and informa on clearly and accurately in order to support analysis of topics or text'
+  content_and_analysis = Skill.find_or_create_by!(
+    name: 'The extent to which the essay conveys ideas and information clearly and accurately in order to support analysis of topics or text',
+    oid: 'CONTENT AND ANALYSIS'
   )
 
-  four_point_c_and_a_elements = [
-    'clearly introduce a topic in a manner that follows logically from the task and purpose',
-    'demonstrate comprehension and analysis of the text',
-  ]
-  four_point_c_and_a_elements.each do |element_text|
-    RubricElement.find_or_create_by!(
-      required_for_point_level: 4,
-      rubric: third_grade_extended_response_rubric,
-      text: element_text,
-      rubric_element_criterion: content_and_analysis
-    )
+  points_to_c_and_a_elements = {
+    4 => [
+      'clearly introduce a topic in a manner that follows logically from the task and purpose',
+      'demonstrate comprehension and analysis of the text',
+    ],
+    3 => [
+      'clearly introduce a topic in a manner that follows from the task and purpose',
+      'demonstrate grade-appropriate comprehension of the text'
+    ],
+    2 => [
+      'introduce a topic in a manner that follows generally from the task and purpose',
+      'demonstrate a confused comprehension of the text',
+    ],
+    1 => [
+      'introduce a topic in a manner that does not logically follow from the task and purpose',
+      'demonstrate little understanding of the text',
+    ],
+    0 => [
+      'demonstrate a lack of comprehension of the text or task'
+    ],
+  }
+  points_to_c_and_a_elements.each do |points, element_texts|
+    element_texts.each do |element_text|
+      RubricElement.find_or_create_by!(
+        required_for_point_level: points,
+        rubric: third_grade_extended_response_rubric,
+        text: element_text,
+        skill: content_and_analysis
+      )
+    end
   end
 
-    # Create rubric elements, one for each point level for each criterion for each grade set
+        # COMMAND OF EVIDENCE
+  command_of_evidence = Skill.find_or_create_by!(
+    name: 'The extent to which the essay presents evidence from the provided text to support analysis and refection',
+    oid: 'COMMAND OF EVIDENCE'
+  )
+
+  points_to_command_of_evidence_elements = {
+    4 => [
+      'develop the topic with relevant, well-chosen facts, definitions, and details throughout the essay',
+    ],
+    3 => [
+      'develop the topic with relevant facts, definitions, and details throughout the essay'
+    ],
+    2 => [
+      'partially develop the topic of the essay with the use of some textual evidence, some of which may be irrelevant',
+    ],
+    1 => [
+      'demonstrate an attempt to use evidence, but only develop ideas with minimal, occasional evidence which is generally invalid or irrelevant',
+    ],
+    0 => [
+      'demonstrate a lack of comprehension of the text or task'
+    ],
+  }
+  points_to_command_of_evidence_elements.each do |points, element_texts|
+    element_texts.each do |element_text|
+      RubricElement.find_or_create_by!(
+        required_for_point_level: points,
+        rubric: third_grade_extended_response_rubric,
+        text: element_text,
+        skill: command_of_evidence
+      )
+    end
+  end
+
+        # COHERENCE, ORGANIZATION, AND STYLE
+  coherence = Skill.find_or_create_by!(
+    name: 'The extent to which the essay logically organizes complex ideas, concepts, and information using formal style and precise language',
+    oid: 'COHERENCE, ORGANIZATION, AND STYLE'
+  )
+
+  points_to_coherence_elements = {
+    4 => [
+      
+    ],
+    3 => [
+      
+    ],
+    2 => [
+      
+    ],
+    1 => [
+      
+    ],
+    0 => [
+
+    ],
+  }
+  points_to_coherence_elements.each do |points, element_texts|
+    element_texts.each do |element_text|
+      RubricElement.find_or_create_by!(
+        required_for_point_level: points,
+        rubric: third_grade_extended_response_rubric,
+        text: element_text,
+        skill: coherence
+      )
+    end
+  end
 end
