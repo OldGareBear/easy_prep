@@ -65,7 +65,8 @@ task create_question_types: :environment do
     RubricElement.find_or_create_by!(
       required_for_point_level: 4,
       rubric: third_grade_extended_response_rubric,
-      text: element_text
+      text: element_text,
+      rubric_element_criterion: content_and_analysis
     )
   end
 
