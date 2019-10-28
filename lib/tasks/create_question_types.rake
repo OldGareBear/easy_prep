@@ -43,7 +43,7 @@ task create_question_types: :environment do
   zero_point_elements.each do |element_text|
     RubricElement.find_or_create_by!(required_for_point_level: 0, rubric: short_response_rubric, text: element_text)
   end
-  
+
   short_response.rubric = short_response_rubric
 
 
@@ -314,7 +314,7 @@ task create_question_types: :environment do
       'provide a concluding statement that follows generally from the topic and information presented',
     ],
     1 => [
-      'exhibit li le attempt at organization, or attempts to organize are irrelevant to the task',
+      'exhibit little attempt at organization, or attempts to organize are irrelevant to the task',
       'lack the use of linking words and phrases',
       'use language that is imprecise or inappropriate for the text(s) and task',
       'provide a concluding statement that is illogical or unrelated to the topic and information presented',
@@ -408,7 +408,7 @@ task create_question_types: :environment do
     ],
     1 => [
       'introduce a topic in a manner that does not logically follow from the task and purpose',
-      'demonstrate li le understanding of the text(s)',
+      'demonstrate little understanding of the text(s)',
     ],
     0 => [
       'demonstrate a lack of comprehension of the text(s) or task'
@@ -477,7 +477,7 @@ task create_question_types: :environment do
       'provide a concluding statement or section that follows generally from the topic and information presented',
     ],
     1 => [
-      'exhibit li le attempt at organization, or attempts to organize are irrelevant to the task',
+      'exhibit little attempt at organization, or attempts to organize are irrelevant to the task',
       'lack a formal style, using language that is imprecise or inappropriate for the text(s) and task',
       'provide a concluding statement or section that is illogical or unrelated to the topic and information presented',
     ],

@@ -41,10 +41,12 @@ document.addEventListener('DOMContentLoaded', function(){
                 // description and type
             var newDescription = 'question[' + window._easy_prep_question_number + '][description]';
             var newType = 'question[' + window._easy_prep_question_number + '][type]';
+            var newSkill = 'question[' + window._easy_prep_question_number + '][skill]';
             var modalContainer = $('.ui.bottom.attached.tab.segment');
             modalContainer.find('#question_description').prop('name', newDescription);
             var questionTypes = modalContainer.find('.question_type');
             questionTypes.prop('name', newType);
+            modalContainer.find('.prompt').prop('name', newSkill);
 
                 // answer options
             var previousQuestion = window._easy_prep_question_number - 1;

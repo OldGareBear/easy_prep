@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_27_184024) do
+ActiveRecord::Schema.define(version: 2019_10_28_190342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,7 @@ ActiveRecord::Schema.define(version: 2019_10_27_184024) do
   create_table "answer_options", force: :cascade do |t|
     t.bigint "question_id"
     t.string "text"
-    t.string "correct"
-    t.string "boolean"
+    t.boolean "correct"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_answer_options_on_question_id"
@@ -155,6 +154,8 @@ ActiveRecord::Schema.define(version: 2019_10_27_184024) do
     t.integer "document_file_size"
     t.datetime "document_updated_at"
     t.bigint "grade_id"
+    t.string "description"
+    t.string "instructions"
     t.index ["creator_id"], name: "index_tests_on_creator_id"
     t.index ["grade_id"], name: "index_tests_on_grade_id"
   end
