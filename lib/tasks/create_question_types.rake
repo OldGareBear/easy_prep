@@ -1,10 +1,10 @@
 task create_question_types: :environment do
-  third = Grade.find_or_create_by(name: '3rd')
-  fourth = Grade.find_or_create_by(name: '4th')
-  fifth = Grade.find_or_create_by(name: '5th')
-  sixth = Grade.find_or_create_by(name: '6th')
-  seventh = Grade.find_or_create_by(name: '7th')
-  eighth = Grade.find_or_create_by(name: '8th')
+  Grade.find_or_create_by(name: '3rd')
+  Grade.find_or_create_by(name: '4th')
+  Grade.find_or_create_by(name: '5th')
+  Grade.find_or_create_by(name: '6th')
+  Grade.find_or_create_by(name: '7th')
+  Grade.find_or_create_by(name: '8th')
 
   QuestionType.find_or_create_by!(name: 'multiple choice')
   short_response = QuestionType.find_or_create_by!(name: 'short response')
@@ -48,10 +48,12 @@ task create_question_types: :environment do
 
   # Extended response rubric malarkey
     # 3rd grade
-  extended_response = QuestionType.find_or_create_by!(name: 'extended response')
-      # Create criteria, associating with skills
-        # CONTENT AND ANALYSIS
-  third_grade_extended_response_rubric =  Rubric.find_or_create_by!(name: 'third grade extended response rubric')
+  third_grade_er_rubric =  Rubric.find_or_create_by!(name: 'third grade extended response rubric')
+  QuestionType.find_or_create_by!(
+    name: 'third grade extended response',
+    rubric: third_grade_er_rubric
+  )
+      # CONTENT AND ANALYSIS
 
   content_and_analysis = Skill.find_or_create_by!(
     name: 'The extent to which the essay conveys ideas and information clearly and accurately in order to support analysis of topics or text',
@@ -90,7 +92,7 @@ task create_question_types: :environment do
     end
   end
 
-        # COMMAND OF EVIDENCE
+      # COMMAND OF EVIDENCE
   command_of_evidence = Skill.find_or_create_by!(
     name: 'The extent to which the essay presents evidence from the provided text to support analysis and refection',
     oid: 'COMMAND OF EVIDENCE'
@@ -124,7 +126,7 @@ task create_question_types: :environment do
     end
   end
 
-        # COHERENCE, ORGANIZATION, AND STYLE
+      # COHERENCE, ORGANIZATION, AND STYLE
   coherence = Skill.find_or_create_by!(
     name: 'The extent to which the essay logically organizes complex ideas, concepts, and information using formal style and precise language',
     oid: 'COHERENCE, ORGANIZATION, AND STYLE'
@@ -132,19 +134,28 @@ task create_question_types: :environment do
 
   points_to_coherence_elements = {
     4 => [
-      
+      'clearly and consistently group related information together',
+      'skillfully connect ideas within categories of information using linking words and phrases',
+      'provide a concluding statement that follows clearly from the topic and information presented',
     ],
     3 => [
-      
+      'generally group related information together',
+      'connect ideas within categories of information using linking words and phrases',
+      'provide a concluding statement that follows from the topic and information presented',
     ],
     2 => [
-      
+      'exhibit some attempt to group related information together',
+      'inconsistently connect ideas using some linking words and phrases',
+      'provide a concluding statement that follows generally from the topic and information presented',
     ],
     1 => [
-      
+      'exhibit little attempt at organization',
+      'lack the use of linking words and phrases',
+      'provide a concluding statement that is illogical or unrelated to the topic and information presented',
     ],
     0 => [
-
+      'exhibit no evidence of organization',
+      'do not provide a concluding statement',
     ],
   }
   points_to_coherence_elements.each do |points, element_texts|
@@ -154,6 +165,40 @@ task create_question_types: :environment do
         rubric: third_grade_extended_response_rubric,
         text: element_text,
         skill: coherence
+      )
+    end
+  end
+
+      # CONTROL OF CONVENTIONS
+  control = Skill.find_or_create_by!(
+    name: 'The extent to which the essay demonstrates command of the conventions of standard English grammar, usage, capitalization, punctuation, and spelling',
+    oid: 'CONTROL OF CONVENTIONS'
+  )
+
+  points_to_control_elements = {
+    4 => [
+      'demonstrate grade-appropriate command of conventions, with few errors'
+    ],
+    3 => [
+      'demonstrate grade-appropriate command of conventions, with occasional errors that do not hinder comprehension',
+    ],
+    2 => [
+      'demonstrate emerging command of conventions, with some errors that may hinder comprehension',
+    ],
+    1 => [
+      'demonstrate a lack of command of conventions, with frequent errors that hinder comprehension',
+    ],
+    0 => [
+      'are minimal, making assessment of conventions unreliable',
+    ],
+  }
+  points_to_control_elements.each do |points, element_texts|
+    element_texts.each do |element_text|
+      RubricElement.find_or_create_by!(
+        required_for_point_level: points,
+        rubric: third_grade_extended_response_rubric,
+        text: element_text,
+        skill: control
       )
     end
   end
