@@ -43,7 +43,7 @@ task create_question_types: :environment do
   zero_point_elements.each do |element_text|
     RubricElement.find_or_create_by!(required_for_point_level: 0, rubric: short_response_rubric, text: element_text)
   end
-  byebug
+  
   short_response.rubric = short_response_rubric
 
 

@@ -1,4 +1,4 @@
 class RubricElement < ApplicationRecord
   belongs_to :rubric
-  has_one :rubric_element_criterion
+  belongs_to :skill, optional: true
 end
