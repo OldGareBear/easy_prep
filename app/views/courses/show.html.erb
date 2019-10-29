@@ -1,4 +1,13 @@
 <div class="ui four column center aligned grid">
+  <% if notice %>
+    <div class="ui success message">
+      <i class="close icon"></i>
+      <div class="header">
+        <%= notice %>
+      </div>
+    </div>
+  <% end %>
+
   <div></div>
   <h1 class="ui header">Dashboard</h1>
   <div class="column">

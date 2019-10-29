@@ -5,24 +5,39 @@ class TestAssignmentsController < ApplicationController
   end
 
   def create
-    @test_assignment = TestAssignment.new(new_test_assignment_params)
+    @course = Course.find(params[:course_id])
+    @test_assignments = []
 
     respond_to do |format|
-      if @test_assignment.save && transactionally_save_students
-        format.html { redirect_to @test_assignment, notice: 'Test was successfully assigned.' }
-        format.json { render :show, status: :created, location: @test_assignment }
+      if transactionally_save_assignments(params)
+        format.html { redirect_to course_path(@course), notice: "Test was successfully assigned to #{@test_assignments.size} #{'student'.pluralize(@test_assignments.size)}." }
       else
         format.html { render :new }
-        format.json { render json: @test_assignment.errors, status: :unprocessable_entity }
       end
     end
   end
 
   private
 
-  def transactionally_save_students
+  def transactionally_save_assignments(params)
+    TestAssignment.transaction do
+      student_ids(params).each do |student_id|
+        next if student_id == '0' # TODO: figure out why the form has all these 0 values
+        @test_assignments << TestAssignment.create!(new_test_assignment_params.merge(student_id: student_id))
+      end
+    end
   end
 
   def new_test_assignment_params
+    params.require(:test_assignment).permit(:test_id).merge(course_id: params[:course_id])
+  end
+
+  def student_ids(params)
+    return @course.students.pluck(:id) if all_students?(params)
+    params[:test_assignment][:students]
+  end
+
+  def all_students?(params)
+    params[:test_assignment][:students].include?('all')
   end
 end
