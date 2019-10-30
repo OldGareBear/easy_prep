@@ -1,0 +1,41 @@
+<div class="ui four column center aligned grid">
+  <% if notice %>
+      <div class="ui success message">
+        <i class="close icon"></i>
+        <div class="header">
+          <%= notice %>
+        </div>
+      </div>
+  <% end %>
+
+  <div></div>
+  <h1 class="ui header">Dashboard</h1>
+  <div class="column">
+    <div class="ui container">
+      <h3 class="ui header">Pending assignments</h3>
+      <% current_user.assigned_test_assignments.where(submitted_at: nil).each do |test_assignment| %>
+          <div class="ui container">
+            <div class="content">
+              <%= link_to(test_assignment.test.name, student_test_assignment_path(test_assignment)) %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui container">
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui container">
+      <h3 class="ui header">Completed assignments</h3>
+      <% current_user.assigned_test_assignments.where.not(submitted_at: nil).each do |test_assignment| %>
+          <div class="ui container">
+            <div class="content">
+              <%= link_to(test_assignment.test.name, student_test_assignment_path(test_assignment)) %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

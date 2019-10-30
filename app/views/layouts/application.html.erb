@@ -27,23 +27,29 @@
             <%= link_to('Login', new_session_path(User), class: 'item') %>
         <% end %>
 
-        <% if user_signed_in? && current_user.is_a_teacher? %>
-            <div class="ui simple dropdown item">
-              <% if @course&.id %>
-                  <%= @course.name %> <i class="dropdown icon"></i>
-              <% else %>
-                  My Classes
-                  <% if current_user.taught_courses.count > 0 %>
-                      <i class="dropdown icon"></i>
-                  <% end %>
-              <% end %>
-              <div class="menu">
-                <%= link_to('My classes', courses_path, class: 'item') %>
-                <% current_user.taught_courses.each do |course| %>
-                  <%= link_to(course.name, course_path(course), class: 'item') %>
+        <% if user_signed_in? %>
+            <% if current_user.is_a_teacher? %>
+              <div class="ui simple dropdown item">
+                <% if @course&.id %>
+                    <%= @course.name %> <i class="dropdown icon"></i>
+                <% else %>
+                    My Classes
+                    <% if current_user.taught_courses.count > 0 %>
+                        <i class="dropdown icon"></i>
+                    <% end %>
                 <% end %>
+                <div class="menu">
+                  <%= link_to('My classes', courses_path, class: 'item') %>
+                  <% current_user.taught_courses.each do |course| %>
+                    <%= link_to(course.name, course_path(course), class: 'item') %>
+                  <% end %>
+                </div>
               </div>
-            </div>
+            <% else %>
+                <div class="menu">
+                  <%= link_to('Dashboard', student_dashboard_path(current_user), class: 'item') %>
+                </div>
+            <% end%>
         <% end %>
       </div>
     </div>
