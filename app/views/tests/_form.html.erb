@@ -45,5 +45,9 @@
       <div id="add-question" class="ui button">Add another question</div>
     </div>
 
+    <% if @course %>
+      <input name="course_id" value="<%= @course.id %>" type="hidden">
+    <% end %>
+
     <%= form.submit 'Save Test', class: 'ui button primary' %>
 <% end %>

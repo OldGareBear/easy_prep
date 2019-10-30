@@ -16,7 +16,7 @@
       <%= form.label :assessment %>
       <%= form.collection_select(:test_id, Test.all, :id, :name, { prompt: true }, { class: 'ui dropdown' }) %>
       <div class="ui button">
-        <%= link_to('Create a new test', new_test_path) %>
+        <%= link_to('Create a new test', new_test_path(course_id: @course.id)) %>
       </div>
     </div>
 

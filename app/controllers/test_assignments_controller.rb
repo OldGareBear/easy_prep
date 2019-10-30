@@ -1,3 +1,5 @@
+require Rails.root.join('lib').join('services').join('test_assignment_factory.rb')
+
 class TestAssignmentsController < ApplicationController
   def new
     @course = Course.find(params[:course_id])
@@ -23,13 +25,14 @@ class TestAssignmentsController < ApplicationController
     TestAssignment.transaction do
       student_ids(params).each do |student_id|
         next if student_id == '0' # TODO: figure out why the form has all these 0 values
-        @test_assignments << TestAssignment.create!(new_test_assignment_params.merge(student_id: student_id))
+        test_assignment = Services::TestAssignmentFactory.create(
+          test_id: params[:test_assignment][:test_id],
+          course_id: params[:course_id],
+          student_id: student_id
+        )
+        @test_assignments << test_assignment
       end
     end
-  end
-
-  def new_test_assignment_params
-    params.require(:test_assignment).permit(:test_id).merge(course_id: params[:course_id])
   end
 
   def student_ids(params)

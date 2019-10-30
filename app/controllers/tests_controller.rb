@@ -1,5 +1,6 @@
 class TestsController < ApplicationController
   def new
+    @course = Course.where(id: params[:course_id]).first
     @test = Test.new
   end
 
@@ -9,7 +10,12 @@ class TestsController < ApplicationController
 
     respond_to do |format|
       if @test.save
-        format.html { redirect_to @test, notice: 'Test was successfully created.' }
+        if @course = Course.where(id: params[:course_id]).first
+          format.html { redirect_to new_course_test_assignment_path(@course), notice: 'Test was successfully created.' }
+        else
+          # TODO: decide if I really want this to exist (probably not)
+          format.html { redirect_to @test, notice: 'Test was successfully created.' }
+        end
       else
         format.html { render :new }
       end
