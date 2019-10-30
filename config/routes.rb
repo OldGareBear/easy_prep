@@ -22,4 +22,8 @@ Rails.application.routes.draw do
       resources :skills, only: [:index]
     end
   end
+
+  namespace :student do
+    get 'dashboard', to: 'dashboard#show'
+  end
 end

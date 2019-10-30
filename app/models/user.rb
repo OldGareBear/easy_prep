@@ -21,6 +21,14 @@ class User < ApplicationRecord
     create!(attrs.merge(user_type: UserType.teacher))
   end
 
+  def is_a_teacher?
+    user_type&.teacher?
+  end
+
+  def is_a_student?
+    user_type&.student?
+  end
+
   def confirmation_required?
     user_type.teacher?
   end
