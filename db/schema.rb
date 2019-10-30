@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_18_144938) do
+ActiveRecord::Schema.define(version: 2019_10_28_190342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,7 @@ ActiveRecord::Schema.define(version: 2019_10_18_144938) do
   create_table "answer_options", force: :cascade do |t|
     t.bigint "question_id"
     t.string "text"
-    t.string "correct"
-    t.string "boolean"
+    t.boolean "correct"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_answer_options_on_question_id"
@@ -27,19 +26,26 @@ ActiveRecord::Schema.define(version: 2019_10_18_144938) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
-    t.integer "grade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "teacher_id"
+    t.bigint "grade_id"
+    t.index ["grade_id"], name: "index_courses_on_grade_id"
     t.index ["teacher_id"], name: "index_courses_on_teacher_id"
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "question_types", force: :cascade do |t|
     t.string "name"
     t.integer "max_points"
-    t.bigint "rubric_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "rubric_id"
     t.index ["rubric_id"], name: "index_question_types_on_rubric_id"
   end
 
@@ -59,7 +65,9 @@ ActiveRecord::Schema.define(version: 2019_10_18_144938) do
     t.bigint "rubric_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "skill_id"
     t.index ["rubric_id"], name: "index_rubric_elements_on_rubric_id"
+    t.index ["skill_id"], name: "index_rubric_elements_on_skill_id"
   end
 
   create_table "rubrics", force: :cascade do |t|
@@ -118,7 +126,6 @@ ActiveRecord::Schema.define(version: 2019_10_18_144938) do
   create_table "test_assignments", force: :cascade do |t|
     t.bigint "test_id"
     t.bigint "course_id"
-    t.datetime "due_at"
     t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -146,7 +153,11 @@ ActiveRecord::Schema.define(version: 2019_10_18_144938) do
     t.string "document_content_type"
     t.integer "document_file_size"
     t.datetime "document_updated_at"
+    t.bigint "grade_id"
+    t.string "description"
+    t.string "instructions"
     t.index ["creator_id"], name: "index_tests_on_creator_id"
+    t.index ["grade_id"], name: "index_tests_on_grade_id"
   end
 
   create_table "user_types", force: :cascade do |t|
@@ -172,11 +183,13 @@ ActiveRecord::Schema.define(version: 2019_10_18_144938) do
   end
 
   add_foreign_key "answer_options", "questions"
+  add_foreign_key "courses", "grades"
   add_foreign_key "courses", "users", column: "teacher_id"
   add_foreign_key "question_types", "rubrics"
   add_foreign_key "questions", "question_types"
   add_foreign_key "questions", "skills"
   add_foreign_key "rubric_elements", "rubrics"
+  add_foreign_key "rubric_elements", "skills"
   add_foreign_key "skills", "skills", column: "parent_id"
   add_foreign_key "students_courses", "courses"
   add_foreign_key "students_courses", "users", column: "student_id"
@@ -190,5 +203,6 @@ ActiveRecord::Schema.define(version: 2019_10_18_144938) do
   add_foreign_key "test_assignments", "users", column: "student_id"
   add_foreign_key "test_questions", "questions"
   add_foreign_key "test_questions", "tests"
+  add_foreign_key "tests", "grades"
   add_foreign_key "tests", "users", column: "creator_id"
 end

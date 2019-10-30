@@ -4,6 +4,7 @@
     <title>EasyPrep</title>
     <%= javascript_include_tag 'application' %>
     <%= stylesheet_link_tag 'application' %>
+    <%= csrf_meta_tags %>
   </head>
 
   <body>
@@ -13,24 +14,31 @@
           EasyPrep
         </a>
         <% if user_signed_in? %>
-        <a href="/" class="item">Home</a>
-        <div class="ui simple dropdown item">
-          Account <i class="dropdown icon"></i>
-          <div class="menu">
-            <%= link_to('View profile', user_path(current_user), class: 'item') %>
-            <%= link_to('Logout', destroy_user_session_path, method: :delete, class: 'item') %>
+          <a href="/" class="item">Home</a>
+          <div class="ui simple dropdown item">
+            Account <i class="dropdown icon"></i>
+            <div class="menu">
+              <%= link_to('View profile', user_path(current_user), class: 'item') %>
+              <%= link_to('Logout', destroy_user_session_path, method: :delete, class: 'item') %>
+            </div>
           </div>
-        </div>
+        <% else %>
+            <%= link_to('Sign up', new_registration_path(User), class: 'item') %>
+            <%= link_to('Login', new_session_path(User), class: 'item') %>
         <% end %>
 
-        <% if user_signed_in? %>
+        <% if user_signed_in? && current_user.is_a_teacher? %>
             <div class="ui simple dropdown item">
-              <% if @course %>
+              <% if @course&.id %>
                   <%= @course.name %> <i class="dropdown icon"></i>
               <% else %>
-                  My Classes <i class="dropdown icon"></i>
+                  My Classes
+                  <% if current_user.taught_courses.count > 0 %>
+                      <i class="dropdown icon"></i>
+                  <% end %>
               <% end %>
               <div class="menu">
+                <%= link_to('My classes', courses_path, class: 'item') %>
                 <% current_user.taught_courses.each do |course| %>
                   <%= link_to(course.name, course_path(course), class: 'item') %>
                 <% end %>

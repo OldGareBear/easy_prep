@@ -1,0 +1,19 @@
+<div class="column">
+  <div class="ui container">
+    <div></div>
+    <h1 class="ui header">Assign a Test</h1>
+
+    <% if notice %>
+        <div class="ui success message">
+          <i class="close icon"></i>
+          <div class="header">
+            <%= notice %>
+          </div>
+        </div>
+    <% end %>
+
+    <%= render('form', test_assignment: @test_assignment) %>
+
+    <%= link_to('Back', course_path(@course)) %>
+  </div>
+</div>
