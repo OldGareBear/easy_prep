@@ -1,0 +1,27 @@
+<div class="column">
+  <div class="ui container">
+    <div></div>
+    <h1 class="ui header"><%= @test_assignment.test.name %></h1>
+    <div>
+      <%= @test_assignment.test.description %>
+    </div>
+
+    <h1 class="ui header small">Instructions:</h1>
+    <div>
+      <%= @test_assignment.test.instructions %>
+    </div>
+    <form class="ui form items">
+      <% @test_assignment.test_assignment_questions.each_with_index do |test_assignment_question, question_index| %>
+          <% if test_assignment_question.question.question_type.multiple_choice? %>
+              <%= render('multiple_choice', test_assignment_question: test_assignment_question, question_index: question_index) %>
+          <% elsif %>
+              <%= render('short_response', test_assignment_question: test_assignment_question, question_index: question_index) %>
+          <% else %>
+              <%= render('extended_response', test_assignment_question: test_assignment_question, question_index: question_index) %>
+          <% end %>
+      <% end %>
+
+      <input type="submit" name="commit" value="Finish test" class="ui button primary"/>
+    </form>
+  </div>
+</div>
