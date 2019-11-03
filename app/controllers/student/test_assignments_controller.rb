@@ -4,6 +4,11 @@ module Student
 
     def show
       @test_assignment = TestAssignment.where(id: params[:id]).first
+      if @test_assignment.submitted_at
+        render :show_locked
+      else
+        render :show
+      end
     end
 
     def submit
