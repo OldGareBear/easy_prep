@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   namespace :student do
     get 'dashboard', to: 'dashboard#show'
 
-    resources :test_assignments
+    resources :test_assignments do
+      post'submit' => 'test_assignments#submit'
+    end
   end
 end

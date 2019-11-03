@@ -10,11 +10,12 @@
     <div>
       <%= @test_assignment.test.instructions %>
     </div>
-    <form class="ui form items">
+    <form class="ui form items" action="<%= student_test_assignment_submit_path(@test_assignment) %>" accept-charset="UTF-8" method="post">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
       <% @test_assignment.test_assignment_questions.each_with_index do |test_assignment_question, question_index| %>
           <% if test_assignment_question.question.question_type.multiple_choice? %>
               <%= render('multiple_choice', test_assignment_question: test_assignment_question, question_index: question_index) %>
-          <% elsif %>
+          <% elsif test_assignment_question.question.question_type.short_response? %>
               <%= render('short_response', test_assignment_question: test_assignment_question, question_index: question_index) %>
           <% else %>
               <%= render('extended_response', test_assignment_question: test_assignment_question, question_index: question_index) %>

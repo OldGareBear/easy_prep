@@ -4,7 +4,7 @@
   <% test_assignment_question.question.answer_options.each_with_index do |answer_option, answer_index| %>
       <div class="field" style="position: relative;left: 50px;">
         <div class="ui radio checkbox">
-          <input type="radio" name="questions[<%= question_index %>][]" value="<%= answer_index %>" checked="" tabindex="0" class="hidden">
+          <input type="radio" name="questions[<%= test_assignment_question.id %>][]" value="<%= answer_option.id %>" checked="" tabindex="0" class="hidden">
           <label style="font-size: large;font-weight: normal;"><%= answer_option.text %></label>
           <!--<% if answer_index  == 0 %>-->
               <!--<div class="ui basic label huge" style="border: none">A</div>-->
