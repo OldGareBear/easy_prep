@@ -45,6 +45,7 @@ task create_question_types: :environment do
   end
 
   short_response.rubric = short_response_rubric
+  short_response.save!
 
 
 

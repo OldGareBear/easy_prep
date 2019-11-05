@@ -16,4 +16,14 @@ class QuestionType < ApplicationRecord
   def extended_response?
     !(multiple_choice? || short_response?)
   end
+
+  def max_points
+    if multiple_choice?
+      1
+    elsif short_response?
+      2
+    else
+      4
+    end
+  end
 end
