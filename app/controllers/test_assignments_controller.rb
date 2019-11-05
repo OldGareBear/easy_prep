@@ -19,6 +19,11 @@ class TestAssignmentsController < ApplicationController
     end
   end
 
+  def show
+    @course = Course.find(params[:course_id])
+    @test_assignment = TestAssignment.find(params[:id])
+  end
+
   private
 
   def transactionally_save_assignments(params)

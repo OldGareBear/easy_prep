@@ -9,7 +9,10 @@
   <% end %>
 
   <div></div>
-  <h1 class="ui header">Dashboard</h1>
+  <h1 class="ui header">
+    Dashboard
+  </h1>
+
   <div class="column">
     <div class="ui container">
       <h3 class="ui header">Students</h3>
@@ -28,18 +31,20 @@
   </div>
   <div class="column">
     <div class="ui container">
+
+      <h3 class="ui header">Ungraded Assessments</h3>
+      <% @course.test_assignments.ungraded.each do |assignment| %>
+          <div class="ui container">
+            <div class="content">
+              <%= link_to("#{assignment.student.first_name} #{assignment.student.last_name}: #{assignment.test.name}", course_test_assignment_path(@course, assignment.id)) %>
+            </div>
+
+          </div>
+      <% end %>
+
       <div class="ui button">
         <%= link_to('Assign a test', new_course_test_assignment_path(@course)) %>
       </div>
-
-      <h3 class="ui header">Students</h3>
-      <% @course.students.each do |student| %>
-          <div class="ui container">
-            <div class="content">
-              <%= link_to("#{student.first_name} #{student.last_name}", course_students_path(@course, student)) %>
-            </div>
-          </div>
-      <% end %>
 
     </div>
   </div>
