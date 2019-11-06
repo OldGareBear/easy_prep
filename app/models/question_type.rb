@@ -5,6 +5,14 @@ class QuestionType < ApplicationRecord
   belongs_to :rubric, optional: true
   has_many :questions
 
+  def self.multiple_choice
+    find_by_name(MULTIPLE_CHOICE)
+  end
+
+  def self.short_response
+    find_by_name(SHORT_RESPONSE)
+  end
+
   def multiple_choice?
     name == MULTIPLE_CHOICE
   end

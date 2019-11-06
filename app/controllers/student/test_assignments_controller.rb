@@ -1,3 +1,5 @@
+require Rails.root.join('lib').join('services').join('grading_service.rb')
+
 module Student
   class TestAssignmentsController < ApplicationController
     before_action :authenticate_user!
@@ -27,10 +29,12 @@ module Student
 
     def record_answers(test_assignment, answers)
       test_assignment.test_assignment_questions.where(id: answers.keys).each do |question|
-        question.answer_id = answers[question.id]
+        question.answer_id = answers[question.id.to_s].first
         question.save!
       end
-      test_assignment.update_attribute(:submitted_at, Time.now)
+
+      grader = Services::GradingService.new(test_assignment)
+      test_assignment.update_attributes(submitted_at: Time.now, score: grader.multiple_choice_score)
     end
   end
 end
