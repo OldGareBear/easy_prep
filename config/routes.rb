@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
   resources :courses do
     resources :students
-    resources :test_assignments
+    resources :test_assignments do
+      post'grade' => 'test_assignments#grade'
+    end
   end
 
   resources :tests

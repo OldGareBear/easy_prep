@@ -42,10 +42,9 @@ class TestsController < ApplicationController
       question_params[:answer_option]&.each do |option_index, answer_option_text|
         ao = AnswerOption.create!(
           text: answer_option_text,
-          correct: option_index == question_params[:correct_answer_options][question_index.to_i],
+          correct: option_index == question_params[:correct_answer_options].first,
           question: question
         )
-        puts "create answer option #{ao.text}. Correct: #{ao.correct}"
       end
 
       questions << question

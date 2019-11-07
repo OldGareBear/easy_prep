@@ -24,6 +24,10 @@ class TestAssignmentsController < ApplicationController
     @test_assignment = TestAssignment.find(params[:id])
   end
 
+  def grade
+    @test_assignment = TestAssignment.where(id: params[:test_assignment_id]).first
+  end
+
   private
 
   def transactionally_save_assignments(params)

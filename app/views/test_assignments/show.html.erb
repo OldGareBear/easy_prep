@@ -1,0 +1,28 @@
+<div class="column">
+  <div class="ui container">
+    <div></div>
+    <h1 class="ui header"><%= @test_assignment.test.name %></h1>
+    <div>
+      <%= @test_assignment.test.description %>
+    </div>
+
+    <h2 class="ui header">Instructions:</h2>
+    <div>
+      <%= @test_assignment.test.instructions %>
+    </div>
+    <form class="ui form items" action="<%= course_test_assignment_grade_path(@course, @test_assignment) %>" accept-charset="UTF-8" method="post">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+      <% @test_assignment.test_assignment_questions.each_with_index do |test_assignment_question, question_index| %>
+          <% if test_assignment_question.question.question_type.multiple_choice? %>
+              <%= render('multiple_choice', test_assignment_question: test_assignment_question, question_index: question_index) %>
+          <% elsif test_assignment_question.question.question_type.short_response? %>
+              <%= render('short_response', test_assignment_question: test_assignment_question, question_index: question_index) %>
+          <% else %>
+              <%= render('extended_response', test_assignment_question: test_assignment_question, question_index: question_index) %>
+          <% end %>
+      <% end %>
+
+      <input type="submit" name="commit" value="Finish grading" class="ui button primary"/>
+    </form>
+  </div>
+</div>
