@@ -28,7 +28,7 @@ module Student
     private
 
     def record_answers(test_assignment, answers)
-      test_assignment.test_assignment_questions.where(id: answers.keys).each do |question|
+      test_assignment.test_assignment_questions.where(id: answers&.keys).each do |question|
         question.answer_id = answers[question.id.to_s].first
         question.save!
       end
