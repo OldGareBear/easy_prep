@@ -35,10 +35,44 @@ class CoursesController < ApplicationController
                                 FROM test_assignments
                                 JOIN tests ON tests.id = test_assignments.test_id
                                 WHERE test_assignments.course_id = #{@course.id}
+                                AND test_assignments.graded_at IS NOT NULL
                                 AND test_assignments.score IS NOT NULL
                                 GROUP BY tests.name, tests.created_at, tests.max_points
                                 ORDER BY tests.created_at ASC""")
                     .to_a.map { |hash| [hash['name'], hash['avg']] }.to_h
+    @skill_data = TestAssignment
+                    .connection
+                    .execute("""SELECT total.oid, total_questions - correct_answers AS incorrect_answers, correct_answers
+                                FROM (
+                                  SELECT skills.oid, COUNT(test_assignment_questions.id) AS total_questions
+                                  FROM test_assignments
+                                  JOIN tests ON tests.id = test_assignments.test_id
+                                  JOIN test_assignment_questions ON test_assignment_questions.test_assignment_id = test_assignments.id
+                                  JOIN questions ON questions.id = test_assignment_questions.question_id
+                                  JOIN skills ON skills.id = questions.skill_id
+                                  JOIN answer_options ON answer_options.id = test_assignment_questions.answer_id
+                                  WHERE test_assignments.course_id = #{@course.id}
+                                  AND test_assignments.graded_at IS NOT NULL
+                                  GROUP BY skills.oid
+                                ) total LEFT OUTER JOIN (
+                                  SELECT skills.oid, COUNT(test_assignment_questions.id) AS correct_answers
+                                  FROM test_assignments
+                                  JOIN tests ON tests.id = test_assignments.test_id
+                                  JOIN test_assignment_questions ON test_assignment_questions.test_assignment_id = test_assignments.id
+                                  JOIN questions ON questions.id = test_assignment_questions.question_id
+                                  JOIN skills ON skills.id = questions.skill_id
+                                  JOIN answer_options ON answer_options.id = test_assignment_questions.answer_id
+                                  WHERE test_assignments.course_id = #{@course.id}
+                                  AND test_assignments.graded_at IS NOT NULL
+                                  AND answer_options.correct = TRUE
+                                  GROUP BY skills.oid
+                                ) correct ON correct.oid  = total.oid""")
+                    .to_a.map do |skill|
+                      { skill['oid'] => {
+                        incorrect_answers: skill['incorrect_answers'],
+                        correct_answers: skill['correct_answers']
+                      }}
+                    end
   end
 
   private

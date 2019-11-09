@@ -4,17 +4,13 @@ class TestAssignment < ApplicationRecord
   belongs_to :student, class_name: 'User', foreign_key: :student_id
   has_many :test_assignment_questions
 
-  scope :ungraded, -> do
-    self.joins(test_assignment_questions: :test_assignment_question_rubric_elements)
-      .where(test_assignment_questions: { test_assignment_question_rubric_elements: { present: nil } })
-      .where.not(submitted_at: nil)
-      .distinct
-  end
+  scope :ungraded, -> { where(graded_at: nil) }
+  scope :graded, -> { where.not(graded_at: nil) }
 
-  scope :graded, -> do
-    self.joins(test_assignment_questions: :test_assignment_question_rubric_elements)
-      .where.not(test_assignment_questions: { test_assignment_question_rubric_elements: { present: nil } })
-      .where.not(submitted_at: nil)
-      .distinct
-    end
+  def requires_manual_grading?
+    test_assignment_questions
+      .joins(question: :question_type)
+      .where("question_types.name = '#{QuestionType::SHORT_RESPONSE}' OR question_types.name = '#{QuestionType::EXTENDED_RESPONSE}'")
+      .exists?
+  end
 end

@@ -34,7 +34,12 @@ module Student
       end
 
       grader = Services::GradingService.new(test_assignment)
-      test_assignment.update_attributes(submitted_at: Time.now, score: grader.multiple_choice_score)
+      graded_at = test_assignment.requires_manual_grading? ? nil : Time.now
+      test_assignment.update_attributes(
+        submitted_at: Time.now,
+        score: grader.multiple_choice_score,
+        graded_at: graded_at
+      )
     end
   end
 end

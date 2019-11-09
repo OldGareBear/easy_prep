@@ -1,6 +1,7 @@
 class QuestionType < ApplicationRecord
   MULTIPLE_CHOICE = 'multiple choice'
   SHORT_RESPONSE = 'short response'
+  EXTENDED_RESPONSE = 'extended response'
 
   belongs_to :rubric, optional: true
   has_many :questions
@@ -13,6 +14,10 @@ class QuestionType < ApplicationRecord
     find_by_name(SHORT_RESPONSE)
   end
 
+  def self.extended_response
+    find_by_name(EXTENDED_RESPONSE)
+  end
+
   def multiple_choice?
     name == MULTIPLE_CHOICE
   end
@@ -22,7 +27,7 @@ class QuestionType < ApplicationRecord
   end
 
   def extended_response?
-    !(multiple_choice? || short_response?)
+    name == EXTENDED_RESPONSE
   end
 
   def max_points

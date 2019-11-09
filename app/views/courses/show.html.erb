@@ -25,9 +25,21 @@
       <% end %>
     </div>
   </div>
-  <div class="column">
+  <div class="column" style="width: 45%;">
     <div class="ui container">
       <%= line_chart @score_data %>
+      <div class="ui horizontal segments">
+        <div></div>
+          <% @skill_data.each do |skill| %>
+            <div class="ui card">
+              <div class="ui label">
+                <%= skill.keys.first %>
+              </div>
+              <%= pie_chart skill.values.first, label: skill.keys.first, colors: ["red", "green"] %>
+            </div>
+        <% end %>
+        <div></div>
+      </div>
     </div>
   </div>
   <div class="column">
