@@ -49,6 +49,7 @@ GEM
       msgpack (~> 1.0)
     builder (3.2.3)
     byebug (11.0.1)
+    chartkick (3.2.2)
     climate_control (0.2.0)
     closure_tree (6.6.0)
       activerecord (>= 4.1.0)
@@ -221,6 +222,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.1.0)
   byebug
+  chartkick
   closure_tree
   coffee-rails (~> 4.2)
   devise

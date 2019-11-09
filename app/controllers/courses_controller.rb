@@ -29,6 +29,16 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
+    @score_data = TestAssignment
+                    .connection
+                    .execute("""SELECT avg((test_assignments.score * 100) / cast(tests.max_points as decimal)), tests.name, tests.created_at
+                                FROM test_assignments
+                                JOIN tests ON tests.id = test_assignments.test_id
+                                WHERE test_assignments.course_id = #{@course.id}
+                                AND test_assignments.score IS NOT NULL
+                                GROUP BY tests.name, tests.created_at, tests.max_points
+                                ORDER BY tests.created_at ASC""")
+                    .to_a.map { |hash| [hash['name'], hash['avg']] }.to_h
   end
 
   private

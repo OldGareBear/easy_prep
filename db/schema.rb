@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_30_215130) do
+ActiveRecord::Schema.define(version: 2019_11_09_014900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 2019_10_30_215130) do
     t.bigint "grade_id"
     t.string "description"
     t.string "instructions"
+    t.integer "max_points"
     t.index ["creator_id"], name: "index_tests_on_creator_id"
     t.index ["grade_id"], name: "index_tests_on_grade_id"
   end

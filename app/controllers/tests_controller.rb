@@ -7,6 +7,7 @@ class TestsController < ApplicationController
   def create
     @test = Test.new(new_test_params.merge(creator: current_user))
     @test.questions = create_questions(params[:question])
+    @test.max_points = test.questions.reduce(0) { |sum, question| question.question_type.max_points + sum }
 
     respond_to do |format|
       if @test.save
@@ -30,7 +31,7 @@ class TestsController < ApplicationController
 
   def create_questions(questions_params)
     questions = []
-    questions_params.each do |question_index, question_params|
+    questions_params.each do |_, question_params|
       question_type = find_question_type(question_params[:type])
 
       question = Question.create!(

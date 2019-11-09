@@ -5,14 +5,16 @@ class TestAssignment < ApplicationRecord
   has_many :test_assignment_questions
 
   scope :ungraded, -> do
-    self.includes(test_assignment_questions: :test_assignment_question_rubric_elements)
+    self.joins(test_assignment_questions: :test_assignment_question_rubric_elements)
       .where(test_assignment_questions: { test_assignment_question_rubric_elements: { present: nil } })
       .where.not(submitted_at: nil)
+      .distinct
   end
 
   scope :graded, -> do
-    self.includes(test_assignment_questions: :test_assignment_question_rubric_elements)
+    self.joins(test_assignment_questions: :test_assignment_question_rubric_elements)
       .where.not(test_assignment_questions: { test_assignment_question_rubric_elements: { present: nil } })
       .where.not(submitted_at: nil)
+      .distinct
     end
 end
