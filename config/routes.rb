@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :test_assignments do
       post'grade' => 'test_assignments#grade'
     end
+    resources :skills
   end
 
   resources :tests

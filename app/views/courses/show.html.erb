@@ -32,14 +32,14 @@
         <%= line_chart @score_data %>
       </div>
 
-      <div class="ui label large black">Standards</div>
+      <div class="ui label large black">Learning Standards</div>
       <div class="ui four column center aligned grid segment">
         <% @skill_data.each do |skill| %>
           <div class="ui column">
             <div class="ui label">
-              <%= skill.keys.first %>
+              <a href="<%= course_skill_path(@course.id, skill.delete(:skill_id)) %>"><%= skill.delete(:oid) %></a>
             </div>
-            <%= pie_chart skill.values.first, label: skill.keys.first, colors: ["red", "green"] %>
+            <%= pie_chart skill, colors: ['red', 'green'] %>
           </div>
       <% end %>
       </div>
