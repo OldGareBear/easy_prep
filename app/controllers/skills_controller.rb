@@ -5,7 +5,7 @@ class SkillsController < ApplicationController
 
     @score_data = TestAssignment
                     .connection
-                    .execute("""SELECT total.name, total.created_at, (total_questions - correct_answers) / cast(correct_answers as decimal) as score
+                    .execute("""SELECT total.name, total.created_at, COALESCE(correct_answers, 0) / cast(total_questions as decimal) as score
                                 FROM (
                                   SELECT tests.name, tests.created_at, COUNT(test_assignment_questions.id) AS total_questions
                                   FROM test_assignments
@@ -29,17 +29,11 @@ class SkillsController < ApplicationController
                                   JOIN answer_options ON answer_options.id = test_assignment_questions.answer_id
                                   WHERE test_assignments.course_id = #{@course.id}
                                   AND test_assignments.graded_at IS NOT NULL
-                                  AND answer_options.correct = TRUE
+                                  AND answer_options.correct = true
                                   AND skills.id = #{@skill.id}
                                   GROUP BY tests.name, tests.created_at
                                   ORDER BY tests.created_at ASC
                                 ) correct ON correct.name  = total.name""")
-                    .to_a.map do |skill|
-                      { oid: skill['oid'],
-                        skill_id: skill['skill_id'],
-                        incorrect_answers: skill['incorrect_answers'],
-                        correct_answers: skill['correct_answers']
-                      }
-    end
+                    .to_a.map { |hash| [hash['name'], hash['score']] }.to_h
   end
 end

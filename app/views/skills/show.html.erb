@@ -1,13 +1,16 @@
-<div class="column">
-  <div class="ui container">
-    <div class="ui label large black">Class Performance</div>
-    <div class="ui segment">
-      <%= line_chart @score_data %>
-    </div>
+<div class="ui one column center aligned grid">
+  <h1 class="ui header"><%= @skill.name %></h1>
+  <div class="column">
+    <div class="ui container">
+      <div class="ui label large black">Class Performance</div>
+      <div class="ui segment">
+        <%= line_chart @score_data %>
+      </div>
 
-    <div class="ui label large black">Student Performance</div>
-    <div class="ui three column center aligned grid segment">
-      <!-- students by performance category -->
+      <div class="ui label large black">Student Performance</div>
+      <div class="ui three column center aligned grid segment">
+        <!-- students by performance category -->
+      </div>
     </div>
   </div>
 </div>
