@@ -1,6 +1,19 @@
-<div class="ui one column center aligned grid">
-  <h1 class="ui header"><%= @skill.name %></h1>
+<div class="ui four column middle center aligned grid">
+  <div></div>
+  <h1 class="ui header" style="margin-left: 25%; margin-right: 25%"><%= @skill.name %></h1>
   <div class="column">
+    <div class="ui container">
+      <h3 class="ui header">Students</h3>
+      <% @course.students.each do |student| %>
+          <div class="ui container">
+            <div class="content">
+              <%= link_to("#{student.first_name} #{student.last_name}", course_student_path(@course, student)) %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="column" style="width: 45%;">
     <div class="ui container">
       <div class="ui label large black">Class Performance</div>
       <div class="ui segment">
@@ -11,6 +24,25 @@
       <div class="ui three column center aligned grid segment">
         <!-- students by performance category -->
       </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui container">
+
+      <h3 class="ui header">Ungraded Assessments</h3>
+      <% @course.test_assignments.ungraded.each do |assignment| %>
+          <div class="ui container">
+            <div class="content">
+              <%= link_to("#{assignment.student.first_name} #{assignment.student.last_name}: #{assignment.test.name}", course_test_assignment_path(@course, assignment.id)) %>
+            </div>
+
+          </div>
+      <% end %>
+
+      <div class="ui button">
+        <%= link_to('Assign a test', new_course_test_assignment_path(@course)) %>
+      </div>
+
     </div>
   </div>
 </div>
