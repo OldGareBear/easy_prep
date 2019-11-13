@@ -5,7 +5,7 @@ class SkillsController < ApplicationController
 
     @score_data = TestAssignment
                     .connection
-                    .execute("""SELECT total.name, total.created_at, COALESCE(correct_answers, 0) / cast(total_questions as decimal) as score
+                    .execute("""SELECT total.name, total.created_at, (COALESCE(correct_answers, 0) / cast(total_questions as decimal) * 100) as score
                                 FROM (
                                   SELECT tests.name, tests.created_at, COUNT(test_assignment_questions.id) AS total_questions
                                   FROM test_assignments

@@ -40,6 +40,7 @@ class CoursesController < ApplicationController
                                 GROUP BY tests.name, tests.created_at, tests.max_points
                                 ORDER BY tests.created_at ASC""")
                     .to_a.map { |hash| [hash['name'], hash['avg']] }.to_h
+
     @skill_data = TestAssignment
                     .connection
                     .execute("""SELECT total.oid, total.skill_id, total_questions - correct_answers AS incorrect_answers, correct_answers
@@ -64,14 +65,15 @@ class CoursesController < ApplicationController
                                   JOIN answer_options ON answer_options.id = test_assignment_questions.answer_id
                                   WHERE test_assignments.course_id = #{@course.id}
                                   AND test_assignments.graded_at IS NOT NULL
-                                  AND answer_options.correct = TRUE
+                                  AND answer_options.correct = true
                                   GROUP BY skills.oid, skills.id
                                 ) correct ON correct.oid  = total.oid""")
                     .to_a.map do |skill|
-                      { oid: skill['oid'],
+                      {
+                        oid: skill['oid'],
                         skill_id: skill['skill_id'],
                         incorrect_answers: skill['incorrect_answers'],
-                        correct_answers: skill['correct_answers']
+                        correct_answers: skill['correct_answers'],
                       }
     end
   end

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :courses do
     resources :students
+    resources :tests, only: [:show]
     resources :test_assignments do
       post'grade' => 'test_assignments#grade'
     end

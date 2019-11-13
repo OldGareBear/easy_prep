@@ -5,4 +5,5 @@ class Course < ApplicationRecord
   has_many :students, through: :students_courses
   has_many :test_assignments
   has_many :test_assignment_questions, through: :test_assignments
+  has_many :tests, through: :test_assignments
 end
