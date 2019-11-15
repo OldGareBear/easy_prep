@@ -22,8 +22,24 @@
       <% end %>
     </div>
   </div>
-  <div class="column">
+  <div class="column" style="width: 45%">
     <div class="ui container">
+      <div class="ui link cards">
+      <% @badges.each do |badge| %>
+          <div class="card">
+            <div class="image">
+              <img src="/images/badge.png">
+            </div>
+            <div class="content">
+              <div class="header"><%= badge[:score] %></div>
+              <div class="description">
+                <%= badge[:skill].name %>
+              </div>
+            </div>
+          </div>
+      <% end %>
+      </div>
+
     </div>
   </div>
   <div class="column">
