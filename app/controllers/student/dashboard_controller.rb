@@ -1,6 +1,6 @@
 module Student
   class DashboardController < ApplicationController
-    BADGE_LEVEL = 0.9
+    BADGE_LEVEL = 90
     before_action :authenticate_user!
 
     def show
@@ -42,7 +42,7 @@ module Student
 
       @badges = skill_data.map do |skill|
         percent_score = (skill[:correct_answers] / skill[:total_questions].to_f) * 100
-        { skill: Skill.find(skill[:skill_id]), score: percent_score }
+        { skill: Skill.find(skill[:skill_id]), score: percent_score.to_i }
       end.select do |skill|
         skill[:score] >= BADGE_LEVEL
       end
