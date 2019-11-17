@@ -11,7 +11,39 @@
 
       <div class="ui label large black">Student Performance</div>
       <div class="ui three column center aligned grid segment">
-        <!-- students by performance category -->
+        <div class="column">
+          <div class="ui green circular label">Exceeding Expectations</div>
+          <div class="ui list">
+          <% @students_surpassing_standards.each do |student| %>
+            <%= student[:student].first_name %> <%= student[:student].last_name %>
+                <div class="ui label circular green">
+                  <%= student[:score] %>
+                </div>
+          <% end %>
+          </div>
+        </div>
+        <div class="column">
+          <div class="ui yellow circular label">Meeting Expectations</div>
+          <div class="ui list">
+          <% @students_meeting_standards.each do |student| %>
+            <%= student[:student].first_name %> <%= student[:student].last_name %>
+                <div class="ui label circular yellow">
+                  <%= student[:score] %>
+                </div>
+          <% end %>
+          </div>
+        </div>
+        <div class="column">
+          <div class="ui red circular label">At risk</div>
+          <div class="ui list">
+          <% @students_at_risk.each do |student| %>
+            <%= student[:student].first_name %> <%= student[:student].last_name %>
+                <div class="ui label circular red">
+                  <%= student[:score] %>
+                </div>
+          <% end %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
