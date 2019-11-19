@@ -18,26 +18,41 @@
   <tr>
     <td><strong>Content and Analysis</strong></td>
     <td class="center aligned">
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'CONTENT AND ANALYSIS').id %>]" value="4" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 4 }, skills: { oid:'CONTENT AND ANALYSIS' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'CONTENT AND ANALYSIS').id %>]" value="3" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 3 }, skills: { oid:'CONTENT AND ANALYSIS' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'CONTENT AND ANALYSIS').id %>]" value="2" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 2 }, skills: { oid:'CONTENT AND ANALYSIS' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'CONTENT AND ANALYSIS').id %>]" value="1" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 1 }, skills: { oid:'CONTENT AND ANALYSIS' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'CONTENT AND ANALYSIS').id %>]" value="0" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 0 }, skills: { oid:'CONTENT AND ANALYSIS' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
@@ -46,26 +61,41 @@
   <tr>
     <td><strong>Command of Evidence</strong></td>
     <td class="center aligned">
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'COMMAND OF EVIDENCE').id %>]" value="4" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 4 }, skills: { oid:'COMMAND OF EVIDENCE' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'COMMAND OF EVIDENCE').id %>]" value="3" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 3 }, skills: { oid:'COMMAND OF EVIDENCE' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'COMMAND OF EVIDENCE').id %>]" value="2" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 2 }, skills: { oid:'COMMAND OF EVIDENCE' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'COMMAND OF EVIDENCE').id %>]" value="1" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 1 }, skills: { oid:'COMMAND OF EVIDENCE' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'COMMAND OF EVIDENCE').id %>]" value="0" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 0 }, skills: { oid:'COMMAND OF EVIDENCE' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
@@ -74,26 +104,41 @@
   <tr>
     <td><strong>Coherence, Organization, and Style</strong></td>
     <td class="center aligned">
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'COHERENCE, ORGANIZATION, AND STYLE').id %>]" value="4" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 4 }, skills: { oid:'COHERENCE, ORGANIZATION, AND STYLE' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'COHERENCE, ORGANIZATION, AND STYLE').id %>]" value="3" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 3 }, skills: { oid:'COHERENCE, ORGANIZATION, AND STYLE' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'COHERENCE, ORGANIZATION, AND STYLE').id %>]" value="2" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 2 }, skills: { oid:'COHERENCE, ORGANIZATION, AND STYLE' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'COHERENCE, ORGANIZATION, AND STYLE').id %>]" value="1" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 1 }, skills: { oid:'COHERENCE, ORGANIZATION, AND STYLE' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'COHERENCE, ORGANIZATION, AND STYLE').id %>]" value="0" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 0 }, skills: { oid:'COHERENCE, ORGANIZATION, AND STYLE' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
@@ -102,26 +147,41 @@
   <tr>
     <td><strong>Control of Conventions</strong></td>
     <td class="center aligned">
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'CONTROL OF CONVENTIONS').id %>]" value="4" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 4 }, skills: { oid:'CONTROL OF CONVENTIONS' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'CONTROL OF CONVENTIONS').id %>]" value="3" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 3 }, skills: { oid:'CONTROL OF CONVENTIONS' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'CONTROL OF CONVENTIONS').id %>]" value="2" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 2 }, skills: { oid:'CONTROL OF CONVENTIONS' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'CONTROL OF CONVENTIONS').id %>]" value="1" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 1 }, skills: { oid:'CONTROL OF CONVENTIONS' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
     </td>
     <td>
+      <div class="ui radio fitted toggle checkbox">
+        <input type="radio" name="questions[<%= test_assignment_question.id %>][<%= Skill.find_by(oid: 'CONTROL OF CONVENTIONS').id %>]" value="0" checked="" tabindex="0" class="hidden">
+      </div>
       <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 0 }, skills: { oid:'CONTROL OF CONVENTIONS' }).each do |rubric_element| %>
           <p>—<%= rubric_element.rubric_element.text %></p>
       <% end %>
