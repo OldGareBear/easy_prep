@@ -1,0 +1,131 @@
+<div class="ui gray label huge"><%= question_index + 1%></div>
+<label style="font-size: large;font-weight: normal;"><%= test_assignment_question.question.text %></label>
+<table class="ui celled structured table">
+  <thead>
+  <tr>
+    <th rowspan="2">Name</th>
+    <th colspan="5" class="center aligned">Score</th>
+  </tr>
+  <tr>
+    <th>(4) Essays at this Level:</th>
+    <th>(3) Essays at this Level:</th>
+    <th>(2) Essays at this Level:</th>
+    <th>(1) Essays at this Level:</th>
+    <th>(0) Essays at this Level:</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><strong>Content and Analysis</strong></td>
+    <td class="center aligned">
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 4 }, skills: { oid:'CONTENT AND ANALYSIS' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 3 }, skills: { oid:'CONTENT AND ANALYSIS' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 2 }, skills: { oid:'CONTENT AND ANALYSIS' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 1 }, skills: { oid:'CONTENT AND ANALYSIS' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 0 }, skills: { oid:'CONTENT AND ANALYSIS' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Command of Evidence</strong></td>
+    <td class="center aligned">
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 4 }, skills: { oid:'COMMAND OF EVIDENCE' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 3 }, skills: { oid:'COMMAND OF EVIDENCE' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 2 }, skills: { oid:'COMMAND OF EVIDENCE' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 1 }, skills: { oid:'COMMAND OF EVIDENCE' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 0 }, skills: { oid:'COMMAND OF EVIDENCE' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Coherence, Organization, and Style</strong></td>
+    <td class="center aligned">
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 4 }, skills: { oid:'COHERENCE, ORGANIZATION, AND STYLE' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 3 }, skills: { oid:'COHERENCE, ORGANIZATION, AND STYLE' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 2 }, skills: { oid:'COHERENCE, ORGANIZATION, AND STYLE' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 1 }, skills: { oid:'COHERENCE, ORGANIZATION, AND STYLE' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 0 }, skills: { oid:'COHERENCE, ORGANIZATION, AND STYLE' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Control of Conventions</strong></td>
+    <td class="center aligned">
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 4 }, skills: { oid:'CONTROL OF CONVENTIONS' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 3 }, skills: { oid:'CONTROL OF CONVENTIONS' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 2 }, skills: { oid:'CONTROL OF CONVENTIONS' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 1 }, skills: { oid:'CONTROL OF CONVENTIONS' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+    <td>
+      <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: 0 }, skills: { oid:'CONTROL OF CONVENTIONS' }).each do |rubric_element| %>
+          <p>—<%= rubric_element.rubric_element.text %></p>
+      <% end %>
+    </td>
+  </tr>
+  </tbody>
+</table>
