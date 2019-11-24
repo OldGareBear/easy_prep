@@ -5,7 +5,7 @@
     <% @course.test_assignments.submitted.ungraded.each do |assignment| %>
         <div class="ui container">
           <div class="content">
-            <%= link_to("#{assignment.student.first_name} #{assignment.student.last_name}: #{assignment.test.name}", course_test_assignment_path(@course, assignment.id)) %>
+            <%= link_to("#{assignment.student.name}: #{assignment.test.name}", course_test_assignment_path(@course, assignment.id)) %>
           </div>
 
         </div>

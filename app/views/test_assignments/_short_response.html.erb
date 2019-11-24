@@ -1,21 +1,24 @@
 <div class="grouped fields item">
   <div class="ui gray label huge"><%= question_index + 1%></div>
   <label style="font-size: large;font-weight: normal;"><%= test_assignment_question.question.text %></label>
-  <div class="list">
-    <div class="ui segments">
+  <div class="ui segments">
+    <div class="ui celled relaxed list">
       <% 2.downto(0).each do |point_level| %>
-          <div class="ui segment">
-            <p><%= point_level %> points</p>
-          </div>
-          <div class="ui segments">
-            <% test_assignment_question.test_assignment_question_rubric_elements.joins(:rubric_element).where(rubric_elements: { required_for_point_level: point_level }).each do |rubric_element| %>
-              <div class="ui segment">
-                <div class="ui child checkbox">
-                  <input type="checkbox" name="<%= rubric_element.rubric_element.id %>">
-                  <label><%= rubric_element.rubric_element.text %></label>
-                </div>
-              </div>
-            <% end %>
+          <div class="item">
+            <div class="ui master checkbox" data-point-level="<%= point_level %>">
+              <input type="checkbox" name="test_assignment_questions[<%= test_assignment_question.id %>][]" value="<%= point_level %>">
+              <label><%= point_level %> points</label>
+            </div>
+            <div class="list">
+              <% test_assignment_question.test_assignment_question_rubric_elements.joins(:rubric_element).where(rubric_elements: { required_for_point_level: point_level }).each do |rubric_element| %>
+                  <div class="item">
+                    <div class="ui child checkbox">
+                      <input type="checkbox" name="test_assignment_question_rubric_elements[<%= rubric_element.rubric_element.id %>]">
+                      <label><%= rubric_element.rubric_element.text %></label>
+                    </div>
+                  </div>
+              <% end %>
+            </div>
           </div>
       <% end %>
     </div>

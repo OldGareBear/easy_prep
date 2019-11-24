@@ -4,7 +4,7 @@
     <% @course.students.each do |student| %>
         <div class="ui container">
           <div class="content">
-            <%= link_to("#{student.first_name} #{student.last_name}", course_student_path(@course, student)) %>
+            <%= link_to(student.name, course_student_path(@course, student)) %>
           </div>
         </div>
     <% end %>

@@ -26,6 +26,7 @@ class TestAssignmentsController < ApplicationController
 
   def grade
     @test_assignment = TestAssignment.where(id: params[:test_assignment_id]).first
+    byebug
   end
 
   private

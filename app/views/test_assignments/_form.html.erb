@@ -22,20 +22,25 @@
 
     <div class="field">
       <%= form.label :students %>
-      <div class="ui container">
-        <div class="ui checkbox">
-          <%= form.check_box(:students, { multiple: true }, 'all') %>
-          <label>All Students</label>
+
+      <div class="ui celled relaxed list">
+        <div class="item">
+          <div class="ui master checkbox">
+            <input type="checkbox" id="test_assignment_students_all" name="test_assignment[students][]" value="all">
+            <label>All Students</label>
+          </div>
+          <div class="list">
+            <% @course.students.each do |student| %>
+                <div class="item">
+                  <div class="ui child checkbox">
+                    <input type="checkbox" name="test_assignment[students][]" id="test_assignment_students_<%= student.id %>">
+                    <label><%= student.name %></label>
+                  </div>
+                </div>
+            <% end %>
+          </div>
         </div>
       </div>
-      <% @course.students.each do |student| %>
-          <div class="ui container">
-            <div class="ui checkbox">
-              <%= form.check_box(:students, { multiple: true }, student.id) %>
-              <label><%= student.name %></label>
-            </div>
-          </div>
-      <% end %>
     </div>
 
     <div class="actions">
@@ -43,3 +48,5 @@
     </div>
 
 <% end %>
+
+
