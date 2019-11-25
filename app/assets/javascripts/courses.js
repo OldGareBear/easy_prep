@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function(){
             $($(newStudent).find("input")[0]).attr("name", "students[" + $(newStudent).data('position') + "][first_name]");
             $($(newStudent).find("input")[1]).attr("name", "students[" + $(newStudent).data('position') + "][last_name]");
 
+            // ensure new student fields aren't disabled
+            $(newStudent).find(".disabled.input").removeClass('disabled');
+
             // append the new student field to the form
             $("#new-students-container").append(newStudent);
         });

@@ -9,15 +9,34 @@ class CoursesController < ApplicationController
     @course = Course.new
   end
 
+  def update
+    @course = Course.find(params[:id])
+    course_params.each do |key, val|
+      @course.send("#{key}=", val)
+    end
+
+    missing_students = missing_students(params[:students])
+
+    respond_to do |format|
+      if @course.save && transactionally_save_students(missing_students)
+        format.html { redirect_to @course, notice: 'Course was successfully updated.' }
+        format.json { render :show, status: :created, location: @course }
+      else
+        format.html { render :new }
+        format.json { render json: @course.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def edit
     @course = Course.find(params[:id])
   end
 
   def create
-    @course = Course.new(new_course_params.merge(teacher: current_user))
+    @course = Course.new(course_params.merge(teacher: current_user))
 
     respond_to do |format|
-      if @course.save && transactionally_save_students
+      if @course.save && transactionally_save_students(params[:students])
         format.html { redirect_to @course, notice: 'Course was successfully created.' }
         format.json { render :show, status: :created, location: @course }
       else
@@ -80,10 +99,18 @@ class CoursesController < ApplicationController
 
   private
 
-  def transactionally_save_students
+  def missing_students(students_params)
+    students_params.select do  |_, student_params|
+      first_name, last_name = student_params[:first_name].capitalize, student_params[:last_name].capitalize
+      existing_student = @course.students.where(first_name: first_name, last_name: last_name).first
+      existing_student.nil?
+    end
+  end
+
+  def transactionally_save_students(students_params)
     students =  []
     User.transaction do
-      params[:students].each do  |_, student_params|
+      students_params.each do  |_, student_params|
         first_name, last_name = student_params[:first_name].downcase, student_params[:last_name].downcase
         students << create_student!(first_name, last_name)
       end
@@ -108,14 +135,14 @@ class CoursesController < ApplicationController
     increment.to_s
   end
 
-  def new_course_params
+  def course_params
     params.require(:course).permit(:name, :grade_id)
   end
 
   def create_student!(first_name, last_name)
     User.create_student!(
-      first_name: first_name,
-      last_name: last_name,
+      first_name: first_name.capitalize,
+      last_name: last_name.capitalize,
       email: generate_fake_email(first_name, last_name),
       password: generate_fake_password(first_name, last_name)
     )

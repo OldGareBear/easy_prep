@@ -27,7 +27,7 @@ class QuestionType < ApplicationRecord
   end
 
   def extended_response?
-    name == EXTENDED_RESPONSE
+    name.match(EXTENDED_RESPONSE)
   end
 
   def max_points

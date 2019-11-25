@@ -22,18 +22,36 @@
     </div>
 
     <h2 class="ui header">Students</h2>
-    <div id="new-students-container" class="ui container">
-      <div id="new-student-container" class="ui horizontal segments" data-position="0">
-        <div class="field ui segment">
-          <%= form.label :first_name %>
-          <input id="person_name" name="students[0][first_name]" type="text"/>
-        </div>
-        <div class="field ui segment">
-          <%= form.label :last_name %>
-          <input id="person_name" name="students[0][last_name]" type="text"/>
-        </div>
-      </div>
-    </div>
+
+      <% if course.students.count > 0 %>
+          <div id="new-students-container" class="ui container">
+            <% course.students.each_with_index do |student, index| %>
+                <div id="new-student-container" class="ui horizontal segments" data-position="<%= index %>">
+                  <div class="field ui segment disabled input">
+                    <%= form.label :first_name %>
+                    <input id="person_name" name="students[<%= index %>][first_name]" type="text" value="<%= student.first_name %>">
+                  </div>
+                  <div class="field ui segment disabled input">
+                    <%= form.label :last_name %>
+                    <input id="person_name" name="students[<%= index %>][last_name]" type="text" value="<%= student.last_name %>">
+                  </div>
+                </div>
+          <% end %>
+          </div>
+      <% else %>
+          <div id="new-students-container" class="ui container">
+            <div id="new-student-container" class="ui horizontal segments" data-position="0">
+              <div class="field ui segment">
+                <%= form.label :first_name %>
+                <input id="person_name" name="students[0][first_name]" type="text"/>
+              </div>
+              <div class="field ui segment">
+                <%= form.label :last_name %>
+                <input id="person_name" name="students[0][last_name]" type="text"/>
+              </div>
+            </div>
+          </div>
+      <% end %>
 
     <div class="field">
       <div id="add-student" class="ui button">Add another student</div>

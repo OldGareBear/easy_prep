@@ -10,6 +10,10 @@
           <div class="content">
             <%= link_to(course.name, controller: 'courses', action: 'show', id: course.id) %>
           </div>
+
+          <div class="extra content">
+            <%= link_to('Edit', controller: 'courses', action: 'edit', id: course.id) %>
+          </div>
         </div>
     <% end %>
 
