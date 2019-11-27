@@ -13,12 +13,14 @@
               <i class="dropdown icon"></i>
               <span class="text">Minimum Score</span>
               <div class="menu">
-                <input type="hidden" name="achievement_benchmarks[<%= benchmark.id %>][]" value="<%= benchmark.minimum_grade %>">
-                <% 100.downto(0) do |score| %>
-                    <% if score % 5 == 0 %>
-                        <div class="item <%= 'active selected' if score == benchmark.minimum_grade %>"><%= score %></div>
-                    <% end %>
-                <% end %>
+                <select type="hidden" name="course[achievement_benchmarks][<%= benchmark.id %>][minimum_grade]">
+                  <option value="<%= benchmark.minimum_grade %>" class="item"><%= benchmark.minimum_grade %></option>
+                  <% 100.downto(0) do |score| %>
+                      <% if score % 5 == 0 && score != benchmark.minimum_grade %>
+                          <option value="<%= score %>" class="item"><%= score %></option>
+                      <% end %>
+                  <% end %>
+                </select>
               </div>
             </div>
           </div>

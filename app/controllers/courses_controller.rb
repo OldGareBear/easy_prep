@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+  DIRECT_COURSE_PARAMS = [:name, :grade_id]
   before_action :authenticate_user!
 
   def index
@@ -10,16 +11,15 @@ class CoursesController < ApplicationController
   end
 
   def update
-    byebug
     @course = Course.find(params[:id])
     course_params.each do |key, val|
-      @course.send("#{key}=", val)
+      @course.send("#{key}=", val) if DIRECT_COURSE_PARAMS.include?(key.to_sym)
     end
 
     missing_students = missing_students(params[:students])
 
     respond_to do |format|
-      if @course.save && transactionally_save_students(missing_students)
+      if @course.save && update_benchmarks(course_params[:achievement_benchmarks]) && transactionally_save_students(missing_students)
         format.html { redirect_to @course, notice: 'Course was successfully updated.' }
         format.json { render :show, status: :created, location: @course }
       else
@@ -137,7 +137,7 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:name, :grade_id)
+    params.require(:course).permit(:name, :grade_id, achievement_benchmarks: [:minimum_grade])
   end
 
   def create_student!(first_name, last_name)
@@ -156,6 +156,12 @@ class CoursesController < ApplicationController
   def create_benchmarks(course)
     AchievementBenchmark.default_benchmark_data.each do |hash|
       AchievementBenchmark.create!(hash.merge(course: course))
+    end
+  end
+
+  def update_benchmarks(benchmark_data)
+    benchmark_data.each do |id, hash|
+      AchievementBenchmark.find(id).update(hash)
     end
   end
 end
