@@ -12,7 +12,9 @@
           </div>
 
           <div class="extra content">
-            <%= link_to('Edit', controller: 'courses', action: 'edit', id: course.id) %>
+            <%= link_to edit_course_path(course) do %>
+                Edit <i class="edit outline icon"></i>
+            <% end %>
           </div>
         </div>
     <% end %>

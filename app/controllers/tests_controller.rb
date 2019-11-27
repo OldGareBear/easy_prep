@@ -96,6 +96,14 @@ class TestsController < ApplicationController
     end
   end
 
+  def edit
+    @test = Test.find(params[:id])
+  end
+
+  def update
+    @test = Test.find(params[:id])
+  end
+
   private
 
   def create_questions(questions_params)
