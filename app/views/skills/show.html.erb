@@ -11,45 +11,22 @@
 
       <div class="ui label large black">Student Performance</div>
       <div class="ui three column center aligned grid segment">
-        <div class="column">
-          <div class="ui green circular label">Exceeding Expectations</div>
-          <div class="ui list">
-          <% @students_surpassing_standards.each do |student| %>
-                <div class="item">
-                  <%= student[:student].name %>
-                  <div class="ui label circular green">
-                    <%= student[:score] %>
-                  </div>
-                </div>
-          <% end %>
-          </div>
-        </div>
-        <div class="column">
-          <div class="ui yellow circular label">Meeting Expectations</div>
-          <div class="ui list">
-          <% @students_meeting_standards.each do |student| %>
-                <div class="item">
-                  <%= student[:student].name %>
-                  <div class="ui label circular yellow">
-                    <%= student[:score] %>
-                  </div>
-                </div>
-          <% end %>
-          </div>
-        </div>
-        <div class="column">
-          <div class="ui red circular label">At risk</div>
-          <div class="ui list">
-          <% @students_at_risk.each do |student| %>
-                <div class="item">
-                  <%= student[:student].name %>
-                  <div class="ui label circular red">
-                    <%= student[:score] %>
-                  </div>
-                </div>
-          <% end %>
-          </div>
-        </div>
+
+        <% @students_by_benchmark.each do |benchmark, students| %>
+            <div class="column">
+              <div class="ui <%= benchmark.color.downcase %> circular label"><%= benchmark.name %></div>
+              <div class="ui list">
+                <% students.each do |student| %>
+                    <div class="item">
+                      <%= student[:student].name %>
+                      <div class="ui label circular <%= benchmark.color.downcase %>">
+                        <%= student[:score] %>
+                      </div>
+                    </div>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
       </div>
     </div>
   </div>

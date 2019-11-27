@@ -1,7 +1,4 @@
 class SkillsController < ApplicationController
-  SURPASS_CUTOFF = 90
-  MEET_CUTOFF = 90
-
   def show
     @course = Course.find(params[:course_id])
     @skill = Skill.find(params[:id])
@@ -76,8 +73,12 @@ class SkillsController < ApplicationController
       { student: User.find(student[:student_id]), score: percent_score.to_i }
     end
 
-    @students_surpassing_standards = student_data.select { |student| student[:score] >= SURPASS_CUTOFF }
-    @students_meeting_standards = student_data.select { |student| student[:score] >= MEET_CUTOFF && student[:score] < SURPASS_CUTOFF }
-    @students_at_risk = student_data.select { |student| student[:score] < MEET_CUTOFF }
+    @students_by_benchmark = student_data.group_by { |student| achievement_benchmark_for(student) }
+  end
+
+  private
+
+  def achievement_benchmark_for(student)
+    AchievementBenchmark.where("minimum_grade <= #{student[:score]}").order('minimum_grade DESC').first
   end
 end

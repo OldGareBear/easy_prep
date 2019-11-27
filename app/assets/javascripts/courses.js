@@ -19,5 +19,9 @@ document.addEventListener('DOMContentLoaded', function(){
             // append the new student field to the form
             $("#new-students-container").append(newStudent);
         });
+
+        $('.ui.dropdown')
+            .dropdown()
+        ;
     }());
 }, false);

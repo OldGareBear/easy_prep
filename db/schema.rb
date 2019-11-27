@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_09_151721) do
+ActiveRecord::Schema.define(version: 2019_11_27_125111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "achievement_benchmarks", force: :cascade do |t|
+    t.string "name"
+    t.integer "minimum_grade"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "course_id"
+    t.index ["course_id"], name: "index_achievement_benchmarks_on_course_id"
+  end
 
   create_table "answer_options", force: :cascade do |t|
     t.bigint "question_id"
@@ -185,6 +195,7 @@ ActiveRecord::Schema.define(version: 2019_11_09_151721) do
     t.index ["user_type_id"], name: "index_users_on_user_type_id"
   end
 
+  add_foreign_key "achievement_benchmarks", "courses"
   add_foreign_key "answer_options", "questions"
   add_foreign_key "courses", "grades"
   add_foreign_key "courses", "users", column: "teacher_id"

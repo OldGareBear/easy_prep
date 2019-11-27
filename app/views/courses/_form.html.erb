@@ -57,5 +57,7 @@
       <div id="add-student" class="ui button">Add another student</div>
     </div>
 
+    <%= render('benchmarks', course: @course) %>
+
     <%= form.submit 'Save Class', class: 'ui button primary' %>
 <% end %>

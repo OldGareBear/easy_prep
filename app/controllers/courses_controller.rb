@@ -10,6 +10,7 @@ class CoursesController < ApplicationController
   end
 
   def update
+    byebug
     @course = Course.find(params[:id])
     course_params.each do |key, val|
       @course.send("#{key}=", val)
@@ -36,7 +37,7 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params.merge(teacher: current_user))
 
     respond_to do |format|
-      if @course.save && transactionally_save_students(params[:students])
+      if @course.save && create_benchmarks(@course) && transactionally_save_students(params[:students])
         format.html { redirect_to @course, notice: 'Course was successfully created.' }
         format.json { render :show, status: :created, location: @course }
       else
@@ -150,5 +151,11 @@ class CoursesController < ApplicationController
 
   def fake_email_domain
     'easyprep.student'
+  end
+
+  def create_benchmarks(course)
+    AchievementBenchmark.default_benchmark_data.each do |hash|
+      AchievementBenchmark.create!(hash.merge(course: course))
+    end
   end
 end
