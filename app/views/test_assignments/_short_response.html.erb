@@ -7,7 +7,7 @@
           <div class="item">
             <div class="ui master checkbox" data-point-level="<%= point_level %>">
               <input type="checkbox" name="test_assignment_questions[<%= test_assignment_question.id %>][]" value="<%= point_level %>">
-              <label><%= point_level %> points</label>
+              <label><strong><%= point_level %> points</strong></label>
             </div>
             <div class="list">
               <% test_assignment_question.test_assignment_question_rubric_elements.joins(:rubric_element).where(rubric_elements: { required_for_point_level: point_level }).each do |rubric_element| %>

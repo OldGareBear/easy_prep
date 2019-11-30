@@ -81,7 +81,7 @@ task create_question_types: :environment do
       # CONTENT AND ANALYSIS
 
   content_and_analysis = Skill.find_or_create_by!(
-    name: 'The extent to which the essay conveys ideas and information clearly and accurately in order to support analysis of topics or text',
+    name: 'Convey ideas and information clearly and accurately in order to support analysis of topics or text',
     oid: 'CONTENT AND ANALYSIS',
     parent: extended_resp_parent_skill
   )
@@ -120,7 +120,7 @@ task create_question_types: :environment do
 
       # COMMAND OF EVIDENCE
   command_of_evidence = Skill.find_or_create_by!(
-    name: 'The extent to which the essay presents evidence from the provided text to support analysis and reflection',
+    name: 'Present evidence from a provided text to support analysis and reflection',
     oid: 'COMMAND OF EVIDENCE',
     parent: extended_resp_parent_skill
   )
@@ -155,7 +155,7 @@ task create_question_types: :environment do
 
       # COHERENCE, ORGANIZATION, AND STYLE
   coherence = Skill.find_or_create_by!(
-    name: 'The extent to which the essay logically organizes complex ideas, concepts, and information using formal style and precise language',
+    name: 'Logically organize complex ideas, concepts, and information using formal style and precise language',
     oid: 'COHERENCE, ORGANIZATION, AND STYLE',
     parent: extended_resp_parent_skill
   )
@@ -199,7 +199,7 @@ task create_question_types: :environment do
 
       # CONTROL OF CONVENTIONS
   control = Skill.find_or_create_by!(
-    name: 'The extent to which the essay demonstrates command of the conventions of standard English grammar, usage, capitalization, punctuation, and spelling',
+    name: 'Demonstrate command of the conventions of standard English grammar, usage, capitalization, punctuation, and spelling',
     oid: 'CONTROL OF CONVENTIONS',
     parent: extended_resp_parent_skill
   )

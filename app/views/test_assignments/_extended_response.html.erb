@@ -21,7 +21,7 @@
 
         <% 4.downto(0).each do |point_level| %>
             <td class="center aligned">
-              <div class="ui radio fitted toggle checkbox">
+              <div class="ui fitted toggle checkbox">
                 <input type="radio" name="test_assignment_questions[<%= test_assignment_question.id %>][skills][<%= skill.id %>]" value="<%= point_level %>" checked="" tabindex="0" class="hidden">
               </div>
               <% test_assignment_question.test_assignment_question_rubric_elements.joins(rubric_element: :skill).where(rubric_elements: { required_for_point_level: point_level }, skills: { id: skill.id }).each do |rubric_element| %>
