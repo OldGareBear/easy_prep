@@ -19,6 +19,29 @@ class TestAssignmentsController < ApplicationController
     end
   end
 
+  def show
+    @course = Course.find(params[:course_id])
+    @test_assignment = TestAssignment.find(params[:id])
+  end
+
+  def grade
+    @test_assignment = TestAssignment.where(id: params[:test_assignment_id]).first
+    byebug
+
+    # short answer
+    present_short_answer_writing_elements = []
+    params[:test_assignment_question_rubric_elements].each do |element|
+      present_short_answer_writing_elements << element.first
+    end
+    TestAssignmentQuestionRubricElement.where(id: present_short_answer_writing_elements).update_all(present: true)
+    shorter_resp_questions = @test_assignment.test_assignment_questions.short_response.pluck(:id)
+    shorter_resp_questions.each do |id|
+      params[:test_assignment_questions][id.to_s]
+    end
+
+
+  end
+
   private
 
   def transactionally_save_assignments(params)

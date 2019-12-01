@@ -1,0 +1,35 @@
+<div class="column" style="width: 100%">
+  <div class="ui container">
+
+    <div class="ui success message">
+      <div class="header">
+        This test has been successfully submitted.
+      </div>
+    </div>
+
+    <h1 class="ui header"><%= @test_assignment.test.name %></h1>
+    <div>
+      <%= @test_assignment.test.description %>
+    </div>
+
+    <h2 class="ui header">Instructions:</h2>
+    <div>
+      <%= @test_assignment.test.instructions %>
+    </div>
+    <form class="ui form items" accept-charset="UTF-8" method="post">
+      <% @test_assignment.test_assignment_questions.order(:id).each_with_index do |test_assignment_question, question_index| %>
+          <% if test_assignment_question.question.question_type.multiple_choice? %>
+              <%= render('multiple_choice', test_assignment_question: test_assignment_question, question_index: question_index) %>
+          <% elsif test_assignment_question.question.question_type.short_response? %>
+              <%= render('short_response', test_assignment_question: test_assignment_question, question_index: question_index) %>
+          <% else %>
+              <%= render('extended_response', test_assignment_question: test_assignment_question, question_index: question_index) %>
+          <% end %>
+      <% end %>
+    </form>
+  </div>
+</div>
+
+<script>
+    $('.checkbox').checkbox('disable');
+</script>

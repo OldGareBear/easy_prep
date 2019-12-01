@@ -1,0 +1,34 @@
+<div class="ui four column middle center aligned grid">
+  <div></div>
+  <h1 class="ui header" style="margin-left: 25%; margin-right: 25%"><%= @skill.name %></h1>
+  <%= render 'dashboard_left' %>
+  <div class="column" style="width: 45%;">
+    <div class="ui container">
+      <div class="ui label large black">Class Performance</div>
+      <div class="ui segment">
+        <%= line_chart @score_data %>
+      </div>
+
+      <div class="ui label large black">Student Performance</div>
+      <div class="ui three column center aligned grid segment">
+
+        <% @students_by_benchmark.each do |benchmark, students| %>
+            <div class="column">
+              <div class="ui <%= benchmark.color.downcase %> circular label"><%= benchmark.name %></div>
+              <div class="ui list">
+                <% students.each do |student| %>
+                    <div class="item">
+                      <%= student[:student].name %>
+                      <div class="ui label circular <%= benchmark.color.downcase %>">
+                        <%= student[:score] %>
+                      </div>
+                    </div>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%= render 'dashboard_right' %>
+</div>

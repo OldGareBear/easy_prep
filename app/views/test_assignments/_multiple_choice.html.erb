@@ -1,0 +1,34 @@
+<div class="grouped fields item">
+  <div class="ui gray label huge"><%= question_index + 1%></div>
+  <label for="question" style="font-size: large;font-weight: normal;"><%= test_assignment_question.question.text %></label>
+  <% test_assignment_question.question.answer_options.each_with_index do |answer_option, _| %>
+      <% if answer_option.correct %>
+          <div class="field ui success message %>" style="position: relative;left: 50px;">
+            <div class="ui radio checkbox <%= 'check-me' if answer_option.id == test_assignment_question.answer_id %>">
+              <input type="radio" name="questions[<%= test_assignment_question.id %>][]" value="<%= answer_option.id %>" checked="" tabindex="0" class="hidden">
+              <label style="font-size: large;font-weight: normal;"><%= answer_option.text %></label>
+            </div>
+          </div>
+      <% elsif answer_option.id == test_assignment_question.answer_id %>
+          <div class="field ui error message" style="position: relative;left: 50px;">
+            <div class="ui radio checkbox <%= 'check-me' if answer_option.id == test_assignment_question.answer_id %>">
+              <input type="radio" name="questions[<%= test_assignment_question.id %>][]" value="<%= answer_option.id %>" checked="" tabindex="0" class="hidden">
+              <label style="font-size: large;font-weight: normal;"><%= answer_option.text %></label>
+            </div>
+          </div>
+      <% else %>
+          <div class="field" style="position: relative;left: 50px;">
+            <div class="ui radio checkbox <%= 'check-me' if answer_option.id == test_assignment_question.answer_id %>">
+              <input type="radio" name="questions[<%= test_assignment_question.id %>][]" value="<%= answer_option.id %>" checked="" tabindex="0" class="hidden">
+              <label style="font-size: large;font-weight: normal;"><%= answer_option.text %></label>
+            </div>
+          </div>
+      <% end %>
+  <% end %>
+
+  <script>
+      $('.checkbox').checkbox('uncheck');
+      $('.check-me').checkbox('check');
+      $('.checkbox').checkbox('disable');
+  </script>
+</div>

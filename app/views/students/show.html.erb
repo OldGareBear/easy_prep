@@ -1,0 +1,32 @@
+<div class="ui four column middle center aligned grid">
+  <div></div>
+  <h1 class="ui header" style="margin-left: 25%; margin-right: 25%"><%= @student.name %></h1>
+
+  <%= render 'dashboard_left' %>
+
+  <div class="column" style="width: 45%;">
+    <div class="ui container">
+      <div class="ui label large black">Progress</div>
+      <div class="ui segment">
+        <%= line_chart @score_data %>
+      </div>
+
+      <div class="ui label large black">
+          Learning Standards
+      </div>
+      <div class="ui four column center aligned grid segment">
+        <% @skill_data.each do |skill| %>
+          <div class="ui column">
+            <div class="ui label">
+              <a href="<%= course_skill_path(@course.id, skill.delete(:skill_id)) %>"><%= skill.delete(:oid) %></a>
+            </div>
+            <%= pie_chart skill, colors: ['red', 'green'] %>
+          </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%= render 'dashboard_right' %>
+
+</div>

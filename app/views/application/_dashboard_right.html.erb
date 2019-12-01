@@ -1,0 +1,19 @@
+<div class="column">
+  <div class="ui container">
+
+    <h3 class="ui header">Ungraded Assignments</h3>
+    <% @course.test_assignments.submitted.ungraded.each do |assignment| %>
+        <div class="ui container">
+          <div class="content">
+            <%= link_to("#{assignment.student.name}: #{assignment.test.name}", course_test_assignment_path(@course, assignment.id)) %>
+          </div>
+
+        </div>
+    <% end %>
+
+    <div class="ui button">
+      <%= link_to('Assign a test', new_course_test_assignment_path(@course)) %>
+    </div>
+
+  </div>
+</div>

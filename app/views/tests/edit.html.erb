@@ -1,0 +1,145 @@
+<div class="column">
+  <div class="ui container">
+    <div></div>
+    <h1 class="ui header">Create an Assessment</h1>
+
+    <%= render('form', test: @test) %>
+
+    <div class="ui modal">
+      <i class="close icon"></i>
+      <div class="header">
+        Create a Question
+      </div>
+
+      <!--Tab Menu-->
+      <div class="ui top attached tabular menu">
+        <a class="item active" data-tab="first">Multiple Choice</a>
+        <a class="item" data-tab="second">Short Response</a>
+        <a class="item" data-tab="third">Extended Response</a>
+      </div>
+
+      <!-- First tab (multiple choice) -->
+      <div class="ui bottom attached tab segment active" data-tab="first">
+        <div class="question ui container">
+
+          <div class="ui form small">
+            <div class="field">
+              <h4 class="ui header small">Question text</h4>
+              <textarea rows="2" name="question[0][description]" id="question_description"></textarea>
+              <input class="question_type" name="question[0][type]" value="multiple choice" type="hidden">
+            </div>
+
+            <div class="field">
+              <h4 class="ui header small">Answer options</h4>
+
+              <!--Answer option-->
+              <div class="easy_prep_answer_option inline fields">
+                <label>A.</label>
+                <input class="easy_prep_answer_option_text" type="text" name="question[0][answer_option][0]">
+                <span style="width: 10px;"></span>
+                <div class="inline field">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" tabindex="0" class="hidden" name="question[0][correct_answer_options][]" value="0">
+                    <label>Correct?</label>
+                  </div>
+                </div>
+              </div>
+
+              <!--Answer option-->
+              <div class="easy_prep_answer_option inline fields">
+                <label>B.</label>
+                <input class="easy_prep_answer_option_text" type="text" name="question[0][answer_option][1]">
+
+                <span style="width: 10px;"></span>
+
+                <div class="inline field">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" tabindex="0" class="hidden" name="question[0][correct_answer_options][]" value="1">
+                    <label>Correct?</label>
+                  </div>
+                </div>
+              </div>
+
+              <!--Answer option-->
+              <div class="easy_prep_answer_option inline fields">
+                <label>C.</label>
+                <input class="easy_prep_answer_option_text" type="text" name="question[0][answer_option][2]">
+
+                <span style="width: 10px;"></span>
+
+                <div class="inline field">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" tabindex="0" class="hidden" name="question[0][correct_answer_options][]" value="2">
+                    <label>Correct?</label>
+                  </div>
+                </div>
+              </div>
+
+              <!--Answer option-->
+              <div class="easy_prep_answer_option inline fields">
+                <label>D.</label>
+                <input class="easy_prep_answer_option_text" type="text" name="question[0][answer_option][3]">
+
+                <span style="width: 10px;"></span>
+
+                <div class="inline field">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" tabindex="0" class="hidden" name="question[0][correct_answer_options][]" value="3">
+                    <label>Correct?</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <h4 class="ui header small">Associated skill</h4>
+              </div>
+              <!-- Skill search -->
+              <div class="ui fluid category search">
+                <div style="width: 100%" class="ui icon input">
+                  <input class="prompt" type="text" name="question[0][skill]" placeholder="Search for skill label...">
+                  <i class="search icon"></i>
+                </div>
+                <div class="results"></div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Second tab (short response) -->
+      <div class="ui bottom attached tab segment" data-tab="second">
+        <div class="question ui container">
+
+          <div class="ui form small">
+            <div class="field">
+              <h4 class="ui header small">Question text</h4>
+              <textarea rows="2" name="question[0][description]" id="question_description"></textarea>
+              <input class="question_type" name="question[0][type]" value="short response" type="hidden">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Third tab (extended response) -->
+      <div class="ui bottom attached tab segment" data-tab="third">
+        <div class="question ui container">
+
+          <div class="ui form small">
+            <div class="field">
+              <h4 class="ui header small">Question text</h4>
+              <textarea rows="2" name="question[0][description]" id="question_description"></textarea>
+              <input class="question_type" name="question[0][type]" value="extended response" type="hidden">
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="actions">
+        <div id="save-question" class="ui button primary">Save Question</div>
+      </div>
+    </div>
+  </div>
+</div>

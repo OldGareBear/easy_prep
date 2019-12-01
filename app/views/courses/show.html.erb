@@ -9,28 +9,33 @@
   <% end %>
 
   <div></div>
-  <h1 class="ui header">Dashboard</h1>
-  <div class="column">
+  <h1 class="ui header">
+    Dashboard
+  </h1>
+
+  <%= render 'dashboard_left' %>
+
+  <div class="column" style="width: 45%;">
     <div class="ui container">
-      <h3 class="ui header">Students</h3>
-      <% @course.students.each do |student| %>
-            <div class="ui container">
-              <div class="content">
-                <%= link_to("#{student.first_name} #{student.last_name}", course_students_path(@course, student)) %>
-              </div>
+      <div class="ui label large black">Class Average</div>
+      <div class="ui segment">
+        <%= line_chart @score_data %>
+      </div>
+
+      <div class="ui label large black">Learning Standards</div>
+      <div class="ui four column center aligned grid segment">
+        <% @skill_data.each do |skill| %>
+          <div class="ui column">
+            <div class="ui label">
+              <a href="<%= course_skill_path(@course.id, skill.delete(:skill_id)) %>"><%= skill.delete(:oid) %></a>
             </div>
+            <%= pie_chart skill, colors: ['red', 'green'] %>
+          </div>
       <% end %>
-    </div>
-  </div>
-  <div class="column">
-    <div class="ui container">
-    </div>
-  </div>
-  <div class="column">
-    <div class="ui container">
-      <div class="ui button">
-        <%= link_to('Assign a test', new_course_test_assignment_path(@course)) %>
       </div>
     </div>
   </div>
+
+  <%= render 'dashboard_right' %>
+
 </div>

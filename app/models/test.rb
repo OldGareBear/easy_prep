@@ -6,4 +6,8 @@ class Test < ApplicationRecord
   has_many :questions, through: :test_questions
 
   has_attached_file :document
+
+  def max_score
+    questions.includes(:question_type).reduce(0) { |sum, question| sum + question.question_type.max_points }
+  end
 end

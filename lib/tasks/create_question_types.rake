@@ -1,4 +1,12 @@
 task create_question_types: :environment do
+  TEXT_OID_MAPPING = {
+    'Valid inferences and/or claims from the text where required by the prompt' => 'MAKING VALID INFERENCES OR CLAIMS',
+    'Evidence of analysis of the text where required by the prompt' => 'ANALYZING THE TEXT',
+    'Relevant facts, definitions, concrete details, and/or other information from the text to develop response according to the requirements of the prompt' => 'USING RELEVANT DETAILS',
+    'Sufficient number of facts, definitions, concrete details, and/or other information from the text as required by the prompt' => 'USING ENOUGH DETAILS',
+    'Complete sentences where errors do not impact readability' => 'USING COMPLETE SENTENCES',
+  }
+
   Grade.find_or_create_by(name: '3rd')
   Grade.find_or_create_by(name: '4th')
   Grade.find_or_create_by(name: '5th')
@@ -8,6 +16,7 @@ task create_question_types: :environment do
 
   QuestionType.find_or_create_by!(name: 'multiple choice')
   short_response = QuestionType.find_or_create_by!(name: 'short response')
+
 
   # Short response rubric malarkey
   short_response_rubric = Rubric.find_or_create_by!(name: 'short response rubric')
@@ -45,12 +54,25 @@ task create_question_types: :environment do
   end
 
   short_response.rubric = short_response_rubric
+  short_response.save!
+
+  short_resp_parent_skill = Skill.find_or_create_by!(name: 'Short Response Features')
+
+  two_point_elements.each do |short_resp_writing_skill|
+    Skill.find_or_create_by!(
+      name: short_resp_writing_skill,
+      oid: TEXT_OID_MAPPING[short_resp_writing_skill],
+      parent: short_resp_parent_skill
+    )
+  end
 
 
 
 
   # Extended response rubric malarkey
     # 3rd grade
+  extended_resp_parent_skill = Skill.find_or_create_by!(name: 'Extended Response Criteria')
+
   third_grade_er_rubric =  Rubric.find_or_create_by!(name: 'third grade extended response rubric')
   QuestionType.find_or_create_by!(
     name: 'third grade extended response',
@@ -59,8 +81,9 @@ task create_question_types: :environment do
       # CONTENT AND ANALYSIS
 
   content_and_analysis = Skill.find_or_create_by!(
-    name: 'The extent to which the essay conveys ideas and information clearly and accurately in order to support analysis of topics or text',
-    oid: 'CONTENT AND ANALYSIS'
+    name: 'Convey ideas and information clearly and accurately in order to support analysis of topics or text',
+    oid: 'CONTENT AND ANALYSIS',
+    parent: extended_resp_parent_skill
   )
 
   points_to_c_and_a_elements = {
@@ -97,8 +120,9 @@ task create_question_types: :environment do
 
       # COMMAND OF EVIDENCE
   command_of_evidence = Skill.find_or_create_by!(
-    name: 'The extent to which the essay presents evidence from the provided text to support analysis and reflection',
-    oid: 'COMMAND OF EVIDENCE'
+    name: 'Present evidence from a provided text to support analysis and reflection',
+    oid: 'COMMAND OF EVIDENCE',
+    parent: extended_resp_parent_skill
   )
 
   points_to_command_of_evidence_elements = {
@@ -131,8 +155,9 @@ task create_question_types: :environment do
 
       # COHERENCE, ORGANIZATION, AND STYLE
   coherence = Skill.find_or_create_by!(
-    name: 'The extent to which the essay logically organizes complex ideas, concepts, and information using formal style and precise language',
-    oid: 'COHERENCE, ORGANIZATION, AND STYLE'
+    name: 'Logically organize complex ideas, concepts, and information using formal style and precise language',
+    oid: 'COHERENCE, ORGANIZATION, AND STYLE',
+    parent: extended_resp_parent_skill
   )
 
   points_to_coherence_elements = {
@@ -174,8 +199,9 @@ task create_question_types: :environment do
 
       # CONTROL OF CONVENTIONS
   control = Skill.find_or_create_by!(
-    name: 'The extent to which the essay demonstrates command of the conventions of standard English grammar, usage, capitalization, punctuation, and spelling',
-    oid: 'CONTROL OF CONVENTIONS'
+    name: 'Demonstrate command of the conventions of standard English grammar, usage, capitalization, punctuation, and spelling',
+    oid: 'CONTROL OF CONVENTIONS',
+    parent: extended_resp_parent_skill
   )
 
   points_to_control_elements = {

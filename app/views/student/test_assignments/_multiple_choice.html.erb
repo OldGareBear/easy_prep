@@ -1,0 +1,30 @@
+<div class="grouped fields item">
+  <div class="ui gray label huge"><%= question_index + 1%></div>
+  <label for="question" style="font-size: large;font-weight: normal;"><%= test_assignment_question.question.text %></label>
+  <% test_assignment_question.question.answer_options.each_with_index do |answer_option, answer_index| %>
+      <div class="field" style="position: relative;left: 50px;">
+        <div class="ui radio checkbox">
+          <input type="radio" name="questions[<%= test_assignment_question.id %>][]" value="<%= answer_option.id %>" checked="" tabindex="0" class="hidden">
+          <label style="font-size: large;font-weight: normal;"><%= answer_option.text %></label>
+          <!--<% if answer_index  == 0 %>-->
+              <!--<div class="ui basic label huge" style="border: none">A</div>-->
+              <!--<label style="font-size: large;font-weight: normal;"><%= answer_option.text %></label>-->
+          <!--<% elsif answer_index  == 1 %>-->
+              <!--<div class="ui basic label huge" style="border: none">B</div>-->
+              <!--<label style="font-size: large;font-weight: normal;"><%= answer_option.text %></label>-->
+          <!--<% elsif answer_index  == 2 %>-->
+              <!--<div class="ui basic label huge" style="border: none">C</div>-->
+              <!--<label style="font-size: large;font-weight: normal;"><%= answer_option.text %></label>-->
+          <!--<% else %>-->
+              <!--<div class="ui basic label huge" style="border: none">D</div>-->
+              <!--<label style="font-size: large;font-weight: normal;"><%= answer_option.text %></label>-->
+          <!--<% end %>-->
+        </div>
+      </div>
+  <% end %>
+
+  <!--TODO put this somewhere appropriate and/or figure out why the last checkbox is being checked by default-->
+  <script>
+      $('.checkbox').checkbox('uncheck');
+  </script>
+</div>

@@ -1,0 +1,2 @@
+module Course::SkillsHelper
+end

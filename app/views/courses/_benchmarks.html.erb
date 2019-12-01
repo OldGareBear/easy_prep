@@ -1,0 +1,30 @@
+<h2 class="ui header">Benchmarks</h2>
+
+<div class="ui three column center aligned grid segment">
+
+  <% @course.achievement_benchmarks.each do |benchmark| %>
+      <div class="column">
+        <div class="ui <%= benchmark.color.downcase %> circular label"><%= benchmark.name %></div>
+        <div class="ui icon top left pointing dropdown button">
+          <i class="wrench icon"></i>
+          <div class="menu">
+            <div class="item">Settings</div>
+            <div class="item">
+              <i class="dropdown icon"></i>
+              <span class="text">Minimum Score</span>
+              <div class="menu">
+                <select type="hidden" name="course[achievement_benchmarks][<%= benchmark.id %>][minimum_grade]">
+                  <option value="<%= benchmark.minimum_grade %>" class="item"><%= benchmark.minimum_grade %></option>
+                  <% 100.downto(0) do |score| %>
+                      <% if score % 5 == 0 && score != benchmark.minimum_grade %>
+                          <option value="<%= score %>" class="item"><%= score %></option>
+                      <% end %>
+                  <% end %>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>

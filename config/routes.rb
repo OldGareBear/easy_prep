@@ -10,7 +10,11 @@ Rails.application.routes.draw do
 
   resources :courses do
     resources :students
-    resources :test_assignments
+    resources :tests, only: [:show]
+    resources :test_assignments do
+      post'grade' => 'test_assignments#grade'
+    end
+    resources :skills
   end
 
   resources :tests
@@ -25,5 +29,9 @@ Rails.application.routes.draw do
 
   namespace :student do
     get 'dashboard', to: 'dashboard#show'
+
+    resources :test_assignments do
+      post'submit' => 'test_assignments#submit'
+    end
   end
 end
