@@ -1,0 +1,91 @@
+<div class="question ui container">
+
+  <div class="ui form small" style="padding: 10px">
+    <div class="field">
+      <h4 class="ui header small">Question text</h4>
+      <textarea rows="2" name="question[<%= question_index %>][description]" id="question_description">
+        <% if question %>
+<%= question.text %>
+        <% end %>
+      </textarea>
+      <input class="question_type" name="question[<%= question_index %>][type]" value="multiple choice" type="hidden">
+    </div>
+
+    <div class="field">
+      <h4 class="ui header small">Answer options</h4>
+
+      <!--Answer option-->
+      <div class="easy_prep_answer_option inline fields">
+        <label>A.</label>
+        <input class="easy_prep_answer_option_text" type="text" name="question[<%= question_index %>][answer_option][0]">
+        <span style="width: 10px;"></span>
+        <div class="inline field">
+          <div class="ui toggle checkbox">
+            <input type="checkbox" tabindex="0" class="hidden" name="question[<%= question_index %>][correct_answer_options][]" value="0">
+            <label>Correct?</label>
+          </div>
+        </div>
+      </div>
+
+      <!--Answer option-->
+      <div class="easy_prep_answer_option inline fields">
+        <label>B.</label>
+        <input class="easy_prep_answer_option_text" type="text" name="question[<%= question_index %>][answer_option][1]">
+
+        <span style="width: 10px;"></span>
+
+        <div class="inline field">
+          <div class="ui toggle checkbox">
+            <input type="checkbox" tabindex="0" class="hidden" name="question[<%= question_index %>][correct_answer_options][]" value="1">
+            <label>Correct?</label>
+          </div>
+        </div>
+      </div>
+
+      <!--Answer option-->
+      <div class="easy_prep_answer_option inline fields">
+        <label>C.</label>
+        <input class="easy_prep_answer_option_text" type="text" name="question[<%= question_index %>][answer_option][2]">
+
+        <span style="width: 10px;"></span>
+
+        <div class="inline field">
+          <div class="ui toggle checkbox">
+            <input type="checkbox" tabindex="0" class="hidden" name="question[<%= question_index %>][correct_answer_options][]" value="2">
+            <label>Correct?</label>
+          </div>
+        </div>
+      </div>
+
+      <!--Answer option-->
+      <div class="easy_prep_answer_option inline fields">
+        <label>D.</label>
+        <input class="easy_prep_answer_option_text" type="text" name="question[<%= question_index %>][answer_option][3]">
+
+        <span style="width: 10px;"></span>
+
+        <div class="inline field">
+          <div class="ui toggle checkbox">
+            <input type="checkbox" tabindex="0" class="hidden" name="question[<%= question_index %>][correct_answer_options][]" value="3">
+            <label>Correct?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <h4 class="ui header small">Associated skill</h4>
+      </div>
+      
+      <!-- Skill search -->
+      <div class="ui fluid category search">
+        <div style="width: 100%" class="ui icon input">
+          <input class="prompt" type="text" name="question[0][skill]" placeholder="Search for skill label...">
+          <i class="search icon"></i>
+        </div>
+        <div class="results"></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

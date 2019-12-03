@@ -35,6 +35,17 @@
 
     <div id="questions-container" class="ui container ordered list">
       <!--TODO: any existing questions, put here and adjust JS as necessary -->
+      <% test.questions.each_with_index do |question, index| %>
+          <div class="question ui container segment item">
+            <% if question.multiple_choice? %>
+                <%= render('multiple_choice', question_index: index, question: question) %>
+            <% elsif question.short_response? %>
+                <%= render('short_response', question_index: index, question: question) %>
+            <% else %>
+                <%= render('extended_response', question_index: index, question: question) %>
+            <% end %>
+          </div>
+      <% end %>
 
       <!-- Saved questions get attached here -->
 

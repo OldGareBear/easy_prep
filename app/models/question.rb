@@ -4,4 +4,16 @@ class Question < ApplicationRecord
 
   has_many :test_questions
   has_many :answer_options
+
+  def multiple_choice?
+    question_type.multiple_choice?
+  end
+
+  def short_response?
+    question_type.short_response?
+  end
+
+  def extended_response?
+    question_type.extended_response?
+  end
 end

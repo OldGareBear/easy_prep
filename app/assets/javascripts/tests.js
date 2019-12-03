@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function(){
             var question = $('.ui.bottom.attached.tab.segment.active').find('.question.ui.container')[0];
             var clone = $.clone(question);
             var questionForm = $(clone).find(".ui.form.small");
-            questionForm.prop('style', "padding: 10px");
             $(clone).addClass('segment');
             $(clone).addClass('item');
             $('#questions-container').append(clone);

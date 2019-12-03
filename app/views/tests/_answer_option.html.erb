@@ -1,0 +1,11 @@
+<div class="easy_prep_answer_option inline fields">
+  <label><%= choice_letter %>.</label>
+  <input class="easy_prep_answer_option_text" type="text" name="question[<%= question_index %>][answer_option][<%= choice_number %>]" value="<%= answer_option&.text %>">
+  <span style="width: 10px;"></span>
+  <div class="inline field">
+    <div class="ui toggle checkbox <%= answer_option&.correct ? 'checked' : ''  %>">
+      <input type="checkbox" tabindex="0" class="hidden" name="question[<%= question_index %>][correct_answer_options][]" value="<%= choice_number %>">
+      <label>Correct?</label>
+    </div>
+  </div>
+</div>
