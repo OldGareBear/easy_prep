@@ -14,68 +14,28 @@
     <div class="field">
       <h4 class="ui header small">Answer options</h4>
 
-      <!--Answer option-->
-      <div class="easy_prep_answer_option inline fields">
-        <label>A.</label>
-        <input class="easy_prep_answer_option_text" type="text" name="question[<%= question_index %>][answer_option][0]">
-        <span style="width: 10px;"></span>
-        <div class="inline field">
-          <div class="ui toggle checkbox">
-            <input type="checkbox" tabindex="0" class="hidden" name="question[<%= question_index %>][correct_answer_options][]" value="0">
-            <label>Correct?</label>
-          </div>
-        </div>
-      </div>
+      <% if question %>
+          <%= render('answer_option', choice_letter: 'A', choice_number: '0', answer_option: question.answer_options[0], question_index: question_index) %>
 
-      <!--Answer option-->
-      <div class="easy_prep_answer_option inline fields">
-        <label>B.</label>
-        <input class="easy_prep_answer_option_text" type="text" name="question[<%= question_index %>][answer_option][1]">
+          <%= render('answer_option', choice_letter: 'B', choice_number: '1', answer_option: question.answer_options[1], question_index: question_index) %>
 
-        <span style="width: 10px;"></span>
+          <%= render('answer_option', choice_letter: 'C', choice_number: '2', answer_option: question.answer_options[2], question_index: question_index) %>
 
-        <div class="inline field">
-          <div class="ui toggle checkbox">
-            <input type="checkbox" tabindex="0" class="hidden" name="question[<%= question_index %>][correct_answer_options][]" value="1">
-            <label>Correct?</label>
-          </div>
-        </div>
-      </div>
+          <%= render('answer_option', choice_letter: 'D', choice_number: '3', answer_option: question.answer_options[3], question_index: question_index) %>
+      <% else %>
+          <%= render('answer_option', choice_letter: 'A', choice_number: '0', answer_option: nil, question_index: nil) %>
 
-      <!--Answer option-->
-      <div class="easy_prep_answer_option inline fields">
-        <label>C.</label>
-        <input class="easy_prep_answer_option_text" type="text" name="question[<%= question_index %>][answer_option][2]">
+          <%= render('answer_option', choice_letter: 'B', choice_number: '1', answer_option: nil, question_index: nil) %>
 
-        <span style="width: 10px;"></span>
+          <%= render('answer_option', choice_letter: 'C', choice_number: '2', answer_option: nil, question_index: nil) %>
 
-        <div class="inline field">
-          <div class="ui toggle checkbox">
-            <input type="checkbox" tabindex="0" class="hidden" name="question[<%= question_index %>][correct_answer_options][]" value="2">
-            <label>Correct?</label>
-          </div>
-        </div>
-      </div>
-
-      <!--Answer option-->
-      <div class="easy_prep_answer_option inline fields">
-        <label>D.</label>
-        <input class="easy_prep_answer_option_text" type="text" name="question[<%= question_index %>][answer_option][3]">
-
-        <span style="width: 10px;"></span>
-
-        <div class="inline field">
-          <div class="ui toggle checkbox">
-            <input type="checkbox" tabindex="0" class="hidden" name="question[<%= question_index %>][correct_answer_options][]" value="3">
-            <label>Correct?</label>
-          </div>
-        </div>
-      </div>
+          <%= render('answer_option', choice_letter: 'D', choice_number: '3', answer_option: nil, question_index: nil) %>
+      <% end %>
 
       <div class="field">
         <h4 class="ui header small">Associated skill</h4>
       </div>
-      
+
       <!-- Skill search -->
       <div class="ui fluid category search">
         <div style="width: 100%" class="ui icon input">
