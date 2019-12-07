@@ -33,7 +33,7 @@ task create_question_types: :environment do
 
   two_point_elements.each do |element_text|
     skill = Skill.find_or_create_by!(
-      name: short_resp_writing_skill,
+      name: element_text,
       oid: TEXT_OID_MAPPING[short_resp_writing_skill],
       parent: short_resp_parent_skill
     )
