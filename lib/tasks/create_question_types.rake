@@ -29,8 +29,15 @@ task create_question_types: :environment do
     'Complete sentences where errors do not impact readability',
   ]
 
+  short_resp_parent_skill = Skill.find_or_create_by!(name: 'Short Response Features')
+
   two_point_elements.each do |element_text|
-    RubricElement.find_or_create_by!(required_for_point_level: 2, rubric: short_response_rubric, text: element_text)
+    skill = Skill.find_or_create_by!(
+      name: short_resp_writing_skill,
+      oid: TEXT_OID_MAPPING[short_resp_writing_skill],
+      parent: short_resp_parent_skill
+    )
+    RubricElement.find_or_create_by!(required_for_point_level: 2, rubric: short_response_rubric, text: element_text, skill: skill)
   end
 
   one_point_elements = [
@@ -55,16 +62,6 @@ task create_question_types: :environment do
 
   short_response.rubric = short_response_rubric
   short_response.save!
-
-  short_resp_parent_skill = Skill.find_or_create_by!(name: 'Short Response Features')
-
-  two_point_elements.each do |short_resp_writing_skill|
-    Skill.find_or_create_by!(
-      name: short_resp_writing_skill,
-      oid: TEXT_OID_MAPPING[short_resp_writing_skill],
-      parent: short_resp_parent_skill
-    )
-  end
 
 
 
