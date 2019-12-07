@@ -34,7 +34,7 @@ task create_question_types: :environment do
   two_point_elements.each do |element_text|
     skill = Skill.find_or_create_by!(
       name: element_text,
-      oid: TEXT_OID_MAPPING[short_resp_writing_skill],
+      oid: TEXT_OID_MAPPING[element_text],
       parent: short_resp_parent_skill
     )
     RubricElement.find_or_create_by!(required_for_point_level: 2, rubric: short_response_rubric, text: element_text, skill: skill)
