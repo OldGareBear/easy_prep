@@ -12,13 +12,11 @@ class AchievementBenchmark < ApplicationRecord
         name: 'Meeting Expectations',
         color: 'yellow',
         minimum_grade: '80',
-        maximum_grade: '89',
       },
       {
         name: 'Meeting Expectations',
         color: 'red',
         minimum_grade: '0',
-        maximum_grade: '79',
       },
     ]
   end
