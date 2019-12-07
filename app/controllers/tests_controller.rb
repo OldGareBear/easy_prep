@@ -5,7 +5,7 @@ class TestsController < ApplicationController
   end
 
   def create
-    @test = Test.new(new_test_params.merge(creator: current_user))
+    @test = Test.new(test_params.merge(creator: current_user))
     @test.questions = create_questions(params[:question])
     @test.max_points = @test.questions.reduce(0) { |sum, question| question.question_type.max_points + sum }
 
@@ -97,11 +97,27 @@ class TestsController < ApplicationController
   end
 
   def edit
+    @course = Course.where(id: params[:course_id]).first
     @test = Test.find(params[:id])
   end
 
   def update
     @test = Test.find(params[:id])
+    @test.questions = update_questions(params[:question])
+    @test.max_points = @test.questions.reduce(0) { |sum, question| question.question_type.max_points + sum }
+
+    respond_to do |format|
+      if @test.update_attributes(test_params)
+        if @course = Course.where(id: params[:course_id]).first
+          format.html { redirect_to edit_test_path(@test, course_id: @course.id), notice: 'Test was successfully updated.' }
+        else
+          # TODO: decide if I really want this to exist (probably not)
+          format.html { redirect_to @test, notice: 'Test was successfully updated.' }
+        end
+      else
+        format.html { render :edit }
+      end
+    end
   end
 
   private
@@ -131,6 +147,11 @@ class TestsController < ApplicationController
     questions
   end
 
+  def update_questions(question_params)
+    # TODO: make this actually update the questions
+    @test.questions
+  end
+
   # TODO: refactor data model -- this is the worst thing about this project right now
   def find_question_type(basic_question_type_name)
     if ['short response', 'multiple choice'].include?(basic_question_type_name)
@@ -147,7 +168,7 @@ class TestsController < ApplicationController
     end
   end
 
-  def new_test_params
+  def test_params
     params.require(:test).permit(:name, :grade_id, :description, :instructions)
   end
 end

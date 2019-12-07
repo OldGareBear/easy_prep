@@ -14,7 +14,7 @@
         <div class="ui container">
           <div class="content">
             <%= link_to(test.name, course_test_path(@course, test)) %>
-            <%= link_to edit_test_path(test) do %>
+            <%= link_to edit_test_path(test, course_id: @course.id) do %>
                 <i class="edit outline icon"></i>
             <% end %>
           </div>

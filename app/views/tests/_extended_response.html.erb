@@ -1,0 +1,15 @@
+<div class="question ui container">
+
+  <div class="ui form small" style="padding: 10px">
+    <div class="field">
+      <h4 class="ui header small">Question text</h4>
+      <textarea rows="2" name="question[<%= question_index %>][description]" id="question_description">
+        <% if question %>
+<%= question.text %>
+        <% end %>
+      </textarea>
+      <input class="question_type" name="question[<%= question_index %>][type]" value="extended response" type="hidden">
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,51 @@
+<div class="question ui container">
+
+  <div class="ui form small" style="padding: 10px">
+    <div class="field">
+      <h4 class="ui header small">Question text</h4>
+      <textarea rows="2" name="question[<%= question_index %>][description]" id="question_description">
+        <% if question %>
+<%= question.text %>
+        <% end %>
+      </textarea>
+      <input class="question_type" name="question[<%= question_index %>][type]" value="multiple choice" type="hidden">
+    </div>
+
+    <div class="field">
+      <h4 class="ui header small">Answer options</h4>
+
+      <% if question %>
+          <%= render('answer_option', choice_letter: 'A', choice_number: '0', answer_option: question.answer_options[0], question_index: question_index) %>
+
+          <%= render('answer_option', choice_letter: 'B', choice_number: '1', answer_option: question.answer_options[1], question_index: question_index) %>
+
+          <%= render('answer_option', choice_letter: 'C', choice_number: '2', answer_option: question.answer_options[2], question_index: question_index) %>
+
+          <%= render('answer_option', choice_letter: 'D', choice_number: '3', answer_option: question.answer_options[3], question_index: question_index) %>
+      <% else %>
+          <%= render('answer_option', choice_letter: 'A', choice_number: '0', answer_option: nil, question_index: nil) %>
+
+          <%= render('answer_option', choice_letter: 'B', choice_number: '1', answer_option: nil, question_index: nil) %>
+
+          <%= render('answer_option', choice_letter: 'C', choice_number: '2', answer_option: nil, question_index: nil) %>
+
+          <%= render('answer_option', choice_letter: 'D', choice_number: '3', answer_option: nil, question_index: nil) %>
+      <% end %>
+
+      <div class="field">
+        <h4 class="ui header small">Associated skill</h4>
+      </div>
+
+      <!-- Skill search -->
+      <div class="ui fluid category search">
+        <div style="width: 100%" class="ui icon input">
+          <input class="prompt" type="text" name="question[0][skill]" placeholder="Search for skill label...">
+          <i class="search icon"></i>
+        </div>
+        <div class="results"></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
