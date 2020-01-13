@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', function(){
     (function () {
         window._easy_prep_question_number = 0;
+        var $documentUploader = $('#document_uploader');
+
+        $($documentUploader).click(function() {
+            $(this).siblings('input[type="file"]').trigger('click');
+        });
 
         $('#add-question').click(function() {
             $('.ui.modal').modal('show');

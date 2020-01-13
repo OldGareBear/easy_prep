@@ -169,6 +169,6 @@ class TestsController < ApplicationController
   end
 
   def test_params
-    params.require(:test).permit(:name, :grade_id, :description, :instructions)
+    params.require(:test).permit(:name, :grade_id, :description, :instructions, :document)
   end
 end

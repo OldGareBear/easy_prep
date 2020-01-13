@@ -123,7 +123,7 @@ class CoursesController < ApplicationController
     email_candidate_search = first_name.chars.first + last_name + '@' + fake_email_domain
     matches = User.where("email like ?", email_candidate_search).pluck(:email)
     highest_increment = matches.map { |match| match.match(/\d/).to_a.first.to_i }.max
-    first_name.chars.first + last_name + increment(highest_increment, matches.count) + '@' + fake_email_domain
+    first_name.chars.first + last_name + increment(highest_increment,  matches.count) + '@' + fake_email_domain
   end
 
   def generate_fake_password(first_name, last_name)
