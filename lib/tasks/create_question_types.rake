@@ -11,10 +11,10 @@ task create_question_types: :environment do
   QuestionType.find_or_create_by!(name: 'multiple choice')
 
   # Short response
-  ShortResponseQuestionTypeBuilder.new.build!
+  Services::ShortResponseQuestionTypeBuilder.new.build!
 
   # Extended response rubric malarkey
-  ExtendedResponseQuestionTypeBuilder.new.build!
+  # Services::ExtendedResponseQuestionTypeBuilder.new.build!
 
     # 3rd grade
   extended_resp_parent_skill = Skill.find_or_create_by!(name: 'Extended Response Criteria')

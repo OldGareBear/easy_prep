@@ -13,7 +13,7 @@ development:
   <<: *default
   encoding: unicode
   database: easy_prep_development
-  username: gbethea
+  username: garebear
   password:
 
 # Warning: The database defined as "test" will be erased and
@@ -22,7 +22,7 @@ development:
 test:
   <<: *default
   database: easy_prep_test
-  username: gbethea
+  username: garebear
   password:
 
 production:

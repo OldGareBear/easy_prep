@@ -4,22 +4,21 @@ class SkillsController < ApplicationController
     @skill = Skill.find(params[:id])
 
     # New shit!!!!
-    # questions = Question.where(skill: @skill)
-    # test_assignments = TestAssignment.graded.where(course: @course)
-    # taqs = TestAssignmentQuestion.where(question: questions, test_assignment: test_assignments).includes(test_assignment: :student)
-    # correct = taqs.answered_correctly
-    # incorrect = taqs.answered_incorrectly
-    # correct_by_student = correct.group_by { |taq| taq.test_assignment.student }
-    # incorrect_by_student = incorrect.group_by { |taq| taq.test_assignment.student }
-    #
-    # average_by_student = {}
-    # taqs.group_by { |taq| taq.test_assignment.student }.keys.each do |student|
-    #   num_correct = correct_by_student[student]&.count || 0
-    #   num_incorrect = incorrect_by_student[student]&.count || 0
-    #   average_by_student[student] = num_correct / (num_correct + num_incorrect)
-    # end
-    #
-    # average_score = correct.count.to_f / taqs.count
+    questions = Question.where(skill: @skill)
+    test_assignments = TestAssignment.graded.where(course: @course)
+    taqs = TestAssignmentQuestion.where(question: questions, test_assignment: test_assignments).includes(test_assignment: :student)
+    correct_by_student = taqs.answered_correctly.group_by { |taq| taq.test_assignment.student }
+    incorrect_by_student = taqs.answered_incorrectly.group_by { |taq| taq.test_assignment.student }
+
+    byebug
+    average_by_student = {}
+    taqs.group_by { |taq| taq.test_assignment.student }.keys.each do |student|
+      num_correct = correct_by_student[student]&.count || 0
+      num_incorrect = incorrect_by_student[student]&.count || 0
+      average_by_student[student] = num_correct / (num_correct + num_incorrect)
+    end
+
+    average_score = correct.count.to_f / taqs.count
 
     @score_data = TestAssignment
                     .connection

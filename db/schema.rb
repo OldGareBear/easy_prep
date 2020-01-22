@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 2019_12_15_201004) do
   create_table "achievement_benchmarks", force: :cascade do |t|
     t.string "name"
     t.integer "minimum_grade"
-    t.integer "maximum_grade"
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
