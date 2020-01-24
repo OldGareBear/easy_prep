@@ -1,12 +1,5 @@
 task create_question_types: :environment do
-  TEXT_OID_MAPPING = {
-    'Valid inferences and/or claims from the text where required by the prompt' => 'MAKING VALID INFERENCES OR CLAIMS',
-    'Evidence of analysis of the text where required by the prompt' => 'ANALYZING THE TEXT',
-    'Relevant facts, definitions, concrete details, and/or other information from the text to develop response according to the requirements of the prompt' => 'USING RELEVANT DETAILS',
-    'Sufficient number of facts, definitions, concrete details, and/or other information from the text as required by the prompt' => 'USING ENOUGH DETAILS',
-    'Complete sentences where errors do not impact readability' => 'USING COMPLETE SENTENCES',
-  }
-
+  # Ensure grades exist
   Grade.find_or_create_by(name: '3rd')
   Grade.find_or_create_by(name: '4th')
   Grade.find_or_create_by(name: '5th')
@@ -14,59 +7,15 @@ task create_question_types: :environment do
   Grade.find_or_create_by(name: '7th')
   Grade.find_or_create_by(name: '8th')
 
+  # Multiple choice
   QuestionType.find_or_create_by!(name: 'multiple choice')
-  short_response = QuestionType.find_or_create_by!(name: 'short response')
 
-
-  # Short response rubric malarkey
-  short_response_rubric = Rubric.find_or_create_by!(name: 'short response rubric')
-
-  two_point_elements = [
-    'Valid inferences and/or claims from the text where required by the prompt',
-    'Evidence of analysis of the text where required by the prompt',
-    'Relevant facts, definitions, concrete details, and/or other information from the text to develop response according to the requirements of the prompt',
-    'Sufficient number of facts, definitions, concrete details, and/or other information from the text as required by the prompt',
-    'Complete sentences where errors do not impact readability',
-  ]
-
-  short_resp_parent_skill = Skill.find_or_create_by!(name: 'Short Response Features')
-
-  two_point_elements.each do |element_text|
-    skill = Skill.find_or_create_by!(
-      name: element_text,
-      oid: TEXT_OID_MAPPING[element_text],
-      parent: short_resp_parent_skill
-    )
-    RubricElement.find_or_create_by!(required_for_point_level: 2, rubric: short_response_rubric, text: element_text, skill: skill)
-  end
-
-  one_point_elements = [
-    'A mostly literal recounting of events or details from the text as required by the prompt',
-    'Some relevant facts, definitions, concrete details, and/or other information from the text to develop response according to the requirements of the prompt',
-    'Incomplete sentences or bullets',
-  ]
-
-  one_point_elements.each do |element_text|
-    RubricElement.find_or_create_by!(required_for_point_level: 1, rubric: short_response_rubric, text: element_text)
-  end
-
-  zero_point_elements = [
-    'A response that does not address any of the requirements of the prompt or is totally inaccurate',
-    'A response that is not written in English',
-    'A response that is unintelligible or indecipherable',
-  ]
-
-  zero_point_elements.each do |element_text|
-    RubricElement.find_or_create_by!(required_for_point_level: 0, rubric: short_response_rubric, text: element_text)
-  end
-
-  short_response.rubric = short_response_rubric
-  short_response.save!
-
-
-
+  # Short response
+  Services::ShortResponseQuestionTypeBuilder.new.build!
 
   # Extended response rubric malarkey
+  # Services::ExtendedResponseQuestionTypeBuilder.new.build!
+
     # 3rd grade
   extended_resp_parent_skill = Skill.find_or_create_by!(name: 'Extended Response Criteria')
 

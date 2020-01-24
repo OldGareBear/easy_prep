@@ -15,4 +15,12 @@ class TestAssignmentQuestion < ApplicationRecord
   scope :short_response, -> { self.joins(question: :question_type).where(question_types: { name: 'short response' }) }
   scope :extended_response, -> { self.joins(question: :question_type).where("question_types.name like '%extended response'") }
   scope :multiple_choice, -> { self.joins(question: :question_type).where(question_types: { name: 'multiple choice' }) }
+
+  def correct?
+    selected_answer.correct
+  end
+
+  def incorrect?
+    !selected_answer.correct
+  end
 end

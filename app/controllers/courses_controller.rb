@@ -49,56 +49,24 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
-    @score_data = TestAssignment
-                    .connection
-                    .execute("""SELECT avg((test_assignments.score * 100) / cast(tests.max_points as decimal)), tests.name, tests.created_at
-                                FROM test_assignments
-                                JOIN tests ON tests.id = test_assignments.test_id
-                                WHERE test_assignments.course_id = #{@course.id}
-                                AND test_assignments.graded_at IS NOT NULL
-                                AND test_assignments.score IS NOT NULL
-                                GROUP BY tests.name, tests.created_at, tests.max_points
-                                ORDER BY tests.created_at ASC""")
-                    .to_a.map { |hash| [hash['name'], hash['avg']] }.to_h
 
-    @skill_data = TestAssignment
-                    .connection
-                    .execute("""SELECT total.oid, total.skill_id, total_questions - correct_answers AS incorrect_answers, correct_answers
-                                FROM (
-                                  SELECT skills.oid, skills.id as skill_id, COUNT(test_assignment_questions.id) AS total_questions
-                                  FROM test_assignments
-                                  JOIN tests ON tests.id = test_assignments.test_id
-                                  JOIN test_assignment_questions ON test_assignment_questions.test_assignment_id = test_assignments.id
-                                  JOIN questions ON questions.id = test_assignment_questions.question_id
-                                  JOIN skills ON skills.id = questions.skill_id
-                                  JOIN answer_options ON answer_options.id = test_assignment_questions.answer_id
-                                  WHERE test_assignments.course_id = #{@course.id}
-                                  AND test_assignments.graded_at IS NOT NULL
-                                  GROUP BY skills.oid, skills.id
-                                ) total LEFT OUTER JOIN (
-                                  SELECT skills.oid, skills.id as skill_id, COUNT(test_assignment_questions.id) AS correct_answers
-                                  FROM test_assignments
-                                  JOIN tests ON tests.id = test_assignments.test_id
-                                  JOIN test_assignment_questions ON test_assignment_questions.test_assignment_id = test_assignments.id
-                                  JOIN questions ON questions.id = test_assignment_questions.question_id
-                                  JOIN skills ON skills.id = questions.skill_id
-                                  JOIN answer_options ON answer_options.id = test_assignment_questions.answer_id
-                                  WHERE test_assignments.course_id = #{@course.id}
-                                  AND test_assignments.graded_at IS NOT NULL
-                                  AND answer_options.correct = true
-                                  GROUP BY skills.oid, skills.id
-                                ) correct ON correct.oid  = total.oid""")
-                    .to_a.map do |skill|
-                      {
-                        oid: skill['oid'],
-                        skill_id: skill['skill_id'],
-                        incorrect_answers: skill['incorrect_answers'],
-                        correct_answers: skill['correct_answers'],
-                      }
-    end
+
+    @score_by_test_name = Services::AnalyticsPresenter.get_score_by_test_name(course: @course)
+
+    @results_by_skill = Services::AnalyticsPresenter.get_results_by_skill(course: @course)
   end
 
   private
+
+  def map_score_to_correct_incorrect_counts(skill, score, analyzer)
+    relevant_question_count = analyzer.assigned_questions.where(questions: { skill: skill }).count
+    {
+        oid: skill.oid,
+        skill_id: skill.id,
+        incorrect_answers: (1 - (score / 100)) * relevant_question_count,
+        correct_answers: (score / 100) * relevant_question_count,
+    }
+  end
 
   def missing_students(students_params)
     students_params.select do  |_, student_params|
@@ -123,7 +91,7 @@ class CoursesController < ApplicationController
     email_candidate_search = first_name.chars.first + last_name + '@' + fake_email_domain
     matches = User.where("email like ?", email_candidate_search).pluck(:email)
     highest_increment = matches.map { |match| match.match(/\d/).to_a.first.to_i }.max
-    first_name.chars.first + last_name + increment(highest_increment, matches.count) + '@' + fake_email_domain
+    first_name.chars.first + last_name + increment(highest_increment,  matches.count) + '@' + fake_email_domain
   end
 
   def generate_fake_password(first_name, last_name)
