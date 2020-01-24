@@ -8,14 +8,14 @@
     <div class="ui container">
       <div class="ui label large black">Progress</div>
       <div class="ui segment">
-        <%= column_chart @score_data %>
+        <%= column_chart @score_by_student_name %>
       </div>
 
       <div class="ui label large black">
         Learning Standards
       </div>
       <div class="ui four column center aligned grid segment">
-        <% @skill_data.each do |skill| %>
+        <% @results_by_skill.each do |skill| %>
             <div class="ui column">
               <div class="ui label">
                 <a href="<%= course_skill_path(@course.id, skill.delete(:skill_id)) %>"><%= skill.delete(:oid) %></a>

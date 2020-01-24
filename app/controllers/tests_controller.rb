@@ -27,73 +27,9 @@ class TestsController < ApplicationController
     @course = Course.find(params[:course_id])
     @test = Test.find(params[:id])
 
-    @score_data = TestAssignment
-                    .connection
-                    .execute("""SELECT total.student_id, (COALESCE(correct_answers, 0) / cast(total_questions as decimal) * 100) as score
-                                FROM (
-                                  SELECT test_assignments.student_id, COUNT(test_assignment_questions.id) AS total_questions
-                                  FROM test_assignments
-                                  JOIN tests ON tests.id = test_assignments.test_id
-                                  JOIN test_assignment_questions ON test_assignment_questions.test_assignment_id = test_assignments.id
-                                  JOIN questions ON questions.id = test_assignment_questions.question_id
-                                  JOIN answer_options ON answer_options.id = test_assignment_questions.answer_id
-                                  WHERE test_assignments.course_id = #{@course.id}
-                                  AND test_assignments.graded_at IS NOT NULL
-                                  AND test_assignments.test_id = #{@test.id}
-                                  GROUP BY test_assignments.student_id
-                                ) total LEFT OUTER JOIN (
-                                  SELECT test_assignments.student_id, COUNT(test_assignment_questions.id) AS correct_answers
-                                  FROM test_assignments
-                                  JOIN tests ON tests.id = test_assignments.test_id
-                                  JOIN test_assignment_questions ON test_assignment_questions.test_assignment_id = test_assignments.id
-                                  JOIN questions ON questions.id = test_assignment_questions.question_id
-                                  JOIN answer_options ON answer_options.id = test_assignment_questions.answer_id
-                                  WHERE test_assignments.course_id = #{@course.id}
-                                  AND test_assignments.graded_at IS NOT NULL
-                                  AND answer_options.correct = true
-                                  AND test_assignments.test_id = #{@test.id}
-                                  GROUP BY test_assignments.student_id
-                                ) correct ON correct.student_id  = total.student_id""")
-                    .to_a.map { |hash| [User.find(hash['student_id']).name, hash['score']] }.to_h
-
-    skill_data = TestAssignment
-                   .connection
-                   .execute("""SELECT total.oid, total.skill_id, total_questions - correct_answers AS incorrect_answers, correct_answers
-                               FROM (
-                                 SELECT skills.oid, skills.id as skill_id, COUNT(test_assignment_questions.id) AS total_questions
-                                 FROM test_assignments
-                                 JOIN tests ON tests.id = test_assignments.test_id
-                                 JOIN test_assignment_questions ON test_assignment_questions.test_assignment_id = test_assignments.id
-                                 JOIN questions ON questions.id = test_assignment_questions.question_id
-                                 JOIN skills ON skills.id = questions.skill_id
-                                 JOIN answer_options ON answer_options.id = test_assignment_questions.answer_id
-                                 WHERE test_assignments.course_id = #{@course.id}
-                                 AND test_assignments.graded_at IS NOT NULL
-                                 AND test_assignments.test_id = #{@test.id}
-                                 GROUP BY skills.oid, skills.id
-                               ) total LEFT OUTER JOIN (
-                                 SELECT skills.oid, skills.id as skill_id, COUNT(test_assignment_questions.id) AS correct_answers
-                                 FROM test_assignments
-                                 JOIN tests ON tests.id = test_assignments.test_id
-                                 JOIN test_assignment_questions ON test_assignment_questions.test_assignment_id = test_assignments.id
-                                 JOIN questions ON questions.id = test_assignment_questions.question_id
-                                 JOIN skills ON skills.id = questions.skill_id
-                                 JOIN answer_options ON answer_options.id = test_assignment_questions.answer_id
-                                 WHERE test_assignments.course_id = #{@course.id}
-                                 AND test_assignments.graded_at IS NOT NULL
-                                 AND answer_options.correct = true
-                                 AND test_assignments.test_id = #{@test.id}
-                                 GROUP BY skills.oid, skills.id
-                              ) correct ON correct.oid  = total.oid""")
-
-    @skill_data = skill_data.to_a.map do |skill|
-      {
-        oid: skill['oid'],
-        skill_id: skill['skill_id'],
-        incorrect_answers: skill['incorrect_answers'],
-        correct_answers: skill['correct_answers']
-      }
-    end
+    test_analyzer = Services::TestAnalyzer.new(course: @course, test: @test)
+    @score_by_student_name = get_score_by_student_name(test_analyzer)
+    @results_by_skill = get_results_by_skill(test_analyzer)
   end
 
   def edit
@@ -170,5 +106,27 @@ class TestsController < ApplicationController
 
   def test_params
     params.require(:test).permit(:name, :grade_id, :description, :instructions, :document)
+  end
+
+  def get_score_by_student_name(test_analyzer)
+    score_by_student = test_analyzer.average_grade_by_student
+    score_by_student.map { |student, score| [student.name, score.to_s] }.to_h
+  end
+
+  def get_results_by_skill(test_analyzer)
+    score_by_skill = test_analyzer.average_grade_by_skill
+    score_by_skill.map do |skill, score|
+      map_score_to_correct_incorrect_counts(skill, score, test_analyzer)
+    end
+  end
+
+  def map_score_to_correct_incorrect_counts(skill, score, test_analyzer)
+    relevant_question_count = test_analyzer.assigned_questions.where(questions: { skill: skill }).count
+    {
+        oid: skill.oid,
+        skill_id: skill.id,
+        incorrect_answers: (1 - (score / 100)) * relevant_question_count,
+        correct_answers: (score / 100) * relevant_question_count,
+    }
   end
 end
