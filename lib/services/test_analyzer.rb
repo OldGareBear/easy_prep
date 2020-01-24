@@ -1,9 +1,10 @@
 module Services
   class TestAnalyzer
-    def initialize(course:, test: nil, skill: nil)
+    def initialize(course:, test: nil, skill: nil, student: nil)
       @course = course
       @test = test
       @skill = skill
+      @student = student
     end
 
     def average_grade_by_student
@@ -20,6 +21,20 @@ module Services
         average_by_test[test] = average_for_test(test)
       end
       average_by_test
+    end
+
+    def average_grade_by_skill
+      average_by_skill = {}
+      skills_tested.each do |skill|
+        average_by_skill[skill] = average_for_skill(skill)
+      end
+      average_by_skill
+    end
+
+    def assigned_questions
+      TestAssignmentQuestion
+          .where(question: questions, test_assignment: test_assignments)
+          .includes(test_assignment: :student, question: :skill)
     end
 
     private
@@ -41,13 +56,13 @@ module Services
       if @test
         test_assignments = test_assignments.where(test: @test)
       end
-      test_assignments
-    end
 
-    def assigned_questions
-      TestAssignmentQuestion
-          .where(question: questions, test_assignment: test_assignments)
-          .includes(test_assignment: :student)
+      # Filter student if requested
+      if @student
+        test_assignments = test_assignments.where(student: @student)
+      end
+
+      test_assignments
     end
 
     def correct_answers
@@ -74,12 +89,24 @@ module Services
       incorrect_answers.group_by { |aq| aq.test_assignment.test }
     end
 
+    def correct_by_skill
+      correct_answers.group_by { |aq| aq.question.skill }
+    end
+
+    def incorrect_by_skill
+      incorrect_answers.group_by { |aq| aq.question.skill }
+    end
+
     def students_assigned
-      test_assignments.map(&:student)
+      test_assignments.map(&:student).uniq
     end
 
     def tests_assigned
-      test_assignments.map(&:test)
+      test_assignments.map(&:test).uniq
+    end
+
+    def skills_tested
+      assigned_questions.map { |aq| aq.question.skill }.uniq
     end
 
     def num_correct_for_student(student)
@@ -98,6 +125,14 @@ module Services
       incorrect_by_test[test]&.count || 0
     end
 
+    def num_correct_for_skill(skill)
+      correct_by_skill[skill]&.count || 0
+    end
+
+    def num_incorrect_for_skill(skill)
+      incorrect_by_skill[skill]&.count || 0
+    end
+
     def average_for_student(student)
       num_correct = num_correct_for_student(student)
       num_incorrect = num_incorrect_for_student(student)
@@ -107,6 +142,12 @@ module Services
     def average_for_test(test)
       num_correct = num_correct_for_test(test)
       num_incorrect = num_incorrect_for_test(test)
+      percent_score(num_correct, num_incorrect)
+    end
+
+    def average_for_skill(skill)
+      num_correct = num_correct_for_skill(skill)
+      num_incorrect = num_incorrect_for_skill(skill)
       percent_score(num_correct, num_incorrect)
     end
 
