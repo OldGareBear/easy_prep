@@ -27,9 +27,8 @@ class TestsController < ApplicationController
     @course = Course.find(params[:course_id])
     @test = Test.find(params[:id])
 
-    test_analyzer = Services::TestAnalyzer.new(course: @course, test: @test)
-    @score_by_student_name = get_score_by_student_name(test_analyzer)
-    @results_by_skill = get_results_by_skill(test_analyzer)
+    @results_by_skill = Services::AnalyticsPresenter.get_results_by_skill(course: @course, test: @test)
+    @score_by_test_name = Services::AnalyticsPresenter.get_score_by_test_name(course: @course, test: @test)
   end
 
   def edit
@@ -106,27 +105,5 @@ class TestsController < ApplicationController
 
   def test_params
     params.require(:test).permit(:name, :grade_id, :description, :instructions, :document)
-  end
-
-  def get_score_by_student_name(test_analyzer)
-    score_by_student = test_analyzer.average_grade_by_student
-    score_by_student.map { |student, score| [student.name, score.to_s] }.to_h
-  end
-
-  def get_results_by_skill(test_analyzer)
-    score_by_skill = test_analyzer.average_grade_by_skill
-    score_by_skill.map do |skill, score|
-      map_score_to_correct_incorrect_counts(skill, score, test_analyzer)
-    end
-  end
-
-  def map_score_to_correct_incorrect_counts(skill, score, test_analyzer)
-    relevant_question_count = test_analyzer.assigned_questions.where(questions: { skill: skill }).count
-    {
-        oid: skill.oid,
-        skill_id: skill.id,
-        incorrect_answers: (1 - (score / 100)) * relevant_question_count,
-        correct_answers: (score / 100) * relevant_question_count,
-    }
   end
 end
