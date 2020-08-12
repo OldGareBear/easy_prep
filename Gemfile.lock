@@ -65,7 +65,7 @@ GEM
       msgpack (~> 1.0)
     builder (3.2.3)
     byebug (11.0.1)
-    chartkick (3.3.0)
+    chartkick (3.4.0)
     climate_control (0.2.0)
     closure_tree (6.6.0)
       activerecord (>= 4.1.0)
